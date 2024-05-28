@@ -83,7 +83,9 @@ class AuthenticationController extends Controller
         $user = $this->authenticateUser($mobile);
         $token = $this->generateAPIToken($user);
         if ($user->first_name == null || $user->last_name == null) {
-            $userStatus= 'complete_info';
+            $userStatus = 'complete_info';
+        } else {
+            $userStatus = 'completed';
         }
         return sendResponse('کاربر با موفقیت وارد شد', ['user' => new UserResource($user), 'token' => $token, 'step' => $userStatus]);
     }
