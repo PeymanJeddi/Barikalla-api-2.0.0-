@@ -10,7 +10,8 @@ class Wallet extends Model
 {
     use HasFactory;
     protected $guarded = [
-        'id'
+        'id',
+        'balance',
     ];
 
     public function user(): BelongsTo
