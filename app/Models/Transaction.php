@@ -23,4 +23,9 @@ class Transaction extends Model
     {
         return $this->hasOne(Payment::class);
     }
+
+    public function streamer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'streamer_id');
+    }
 }
