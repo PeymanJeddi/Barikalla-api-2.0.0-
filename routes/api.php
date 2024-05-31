@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthenticationController;
+use App\Http\Controllers\Api\Donation\DonationController;
+use App\Http\Controllers\Api\Payment\PaymentController;
 use App\Http\Controllers\Api\Target\TargetController;
 use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Http\Request;
@@ -17,8 +19,21 @@ Route::prefix('user')->middleware('auth:sanctum')->group(function() {
     Route::delete('/logout', [UserController::class, 'logout']);
 });
 
-Route::prefix('dashboard')->middleware('auth:sanctum')->group(function() {
-    Route::prefix('streamer')->group(function() {
-        Route::apiResource('target', TargetController::class);
+Route::middleware('auth:sanctum')->group(function () {
+   
+    Route::prefix('dashboard')->group(function() {
+        Route::prefix('streamer')->group(function() {
+            Route::apiResource('target', TargetController::class);
+        });
     });
+
+    Route::prefix('payment')->group(function () {
+        Route::post('/transaction', [PaymentController::class, 'createTransaction']);
+    });
+    
+});
+
+Route::prefix('payment')->group(function () {
+    Route::post('/donate', [DonationController::class, 'makeDonate']);
+    Route::post('/verify', [DonationController::class, 'verify']);
 });
