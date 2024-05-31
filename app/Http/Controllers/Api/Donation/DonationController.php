@@ -82,9 +82,10 @@ class DonationController extends Controller
     public function verify(Request $request)
     {
         if ($request->status == 0) {
-            $transaction = Transaction::find($request->OrderId);
-            TransactionService::verifyTransaction($request->Token, $transaction);
+            $transaction = Transaction::where('order_id', $request->OrderId)->first();
+            $payment = TransactionService::verifyTransaction($request->Token, $transaction);
+            dd($payment);
         }
-        return 'worked';
+        return 'error';
     }
 }
