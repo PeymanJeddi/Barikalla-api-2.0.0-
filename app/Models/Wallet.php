@@ -11,7 +11,7 @@ class Wallet extends Model
     use HasFactory;
     protected $guarded = [
         'id',
-        'balance',
+        'credit',
     ];
 
     public function user(): BelongsTo

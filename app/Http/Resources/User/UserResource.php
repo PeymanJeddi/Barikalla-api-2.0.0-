@@ -24,7 +24,7 @@ class UserResource extends JsonResource
             'birthday' => Carbon::parse($this->getRawOriginal('birthday'))
             ->getTimestamp(),
             'description' => $this->description,
-            'wallet_balance' => $this->wallet->balance,
+            'wallet_credit' => $this->wallet->credit,
         ];
     }
 }
