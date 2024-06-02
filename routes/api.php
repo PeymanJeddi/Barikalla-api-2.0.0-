@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Payment\CreditController;
 use App\Http\Controllers\Api\Payment\DonationController;
 use App\Http\Controllers\Api\Payment\SubscribeController;
 use App\Http\Controllers\Api\Payment\VerifyController;
+use App\Http\Controllers\Api\Streamer\StreamerDetailController;
 use App\Http\Controllers\Api\Wallet\CheckoutController;
 use App\Http\Controllers\Api\Target\TargetController;
 use App\Http\Controllers\Api\User\UserController;
@@ -49,6 +50,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('attachment')->group(function() {
         Route::post('/', [AttachmentController::class, 'upload']);
         Route::delete('/{attachment}', [AttachmentController::class, 'destroy']);
+    });
+
+    Route::prefix('streamer')->group(function() {
+        Route::get('/config', [StreamerDetailController::class, 'config']);
+        Route::patch('/streamerdetail', [StreamerDetailController::class, 'update']);
     });
 });
 

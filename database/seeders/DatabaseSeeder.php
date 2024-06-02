@@ -21,8 +21,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $role = Role::create([
+        $role = Role::updateOrCreate(['name' => 'vip'], [
             'name' => 'vip',
+        ]);
+
+        $this->call([
+            JobSeeder::class,
         ]);
     }
 }
