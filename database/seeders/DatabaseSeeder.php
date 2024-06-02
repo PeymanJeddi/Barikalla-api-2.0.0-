@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             JobSeeder::class,
+            LinkSeeder::class,
         ]);
     }
 }
