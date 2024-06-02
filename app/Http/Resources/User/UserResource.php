@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\User;
 
+use App\Http\Resources\Attachment\AttachmentResource;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -25,6 +26,7 @@ class UserResource extends JsonResource
             ->getTimestamp(),
             'description' => $this->description,
             'wallet_credit' => $this->wallet->credit,
+            'avatar' => new AttachmentResource($this->avatar),
         ];
     }
 }

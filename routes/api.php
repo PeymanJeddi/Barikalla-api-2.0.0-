@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Attachment\AttachmentController;
 use App\Http\Controllers\Api\Auth\AuthenticationController;
 use App\Http\Controllers\Api\Payment\CreditController;
 use App\Http\Controllers\Api\Payment\DonationController;
@@ -43,6 +44,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/donate', [DonationController::class, 'makeDonate']);
         Route::post('/addcredit', [CreditController::class, 'addCredit']);
         Route::post('/buysubscribe', [SubscribeController::class, 'buySubscribe']);
+    });
+
+    Route::prefix('attachment')->group(function() {
+        Route::post('/', [AttachmentController::class, 'upload']);
+        Route::delete('/{attachment}', [AttachmentController::class, 'destroy']);
     });
 });
 
