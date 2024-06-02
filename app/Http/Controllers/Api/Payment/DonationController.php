@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api\Donation;
+namespace App\Http\Controllers\Api\Payment;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Donation\DonationStoreController;
 use App\Models\Transaction;
 use App\Models\User;
-use App\Services\TransactionService;
+use App\Services\DonationService;
+use App\Services\PaymentService;
+use App\Services\WalletService;
 use Illuminate\Http\Request;
 
 class DonationController extends Controller
@@ -18,6 +20,7 @@ class DonationController extends Controller
      * operationId="createDonation",
      * tags={"Payment"},
      * summary="Create donations",
+     * security={ {"sanctum": {} }},
      * @OA\RequestBody(
      *    required=true,
      *    description="attempt transaction",
@@ -45,13 +48,19 @@ class DonationController extends Controller
     {
         $user = $this->getUser($request->mobile);
         $streamer = $this->getStreamer($request->streamer_username);
-        $paymentUrl = TransactionService::makeTransaction(
-            $user,
-            $streamer,
-            $request->amount,
-            $request->fullname,
-            $request->description,
-        );
+        $transaction = Transaction::create([
+            'user_id' => $user->id,
+            'streamer_id' => $streamer->id,
+            'amount' => $request->amount,
+            'fullname' => $request->fullname,
+            'description' => $request->description,
+            'mobile' => $user->mobile,
+            'type' => 'donate',
+        ]);
+
+        $paymentUrl = PaymentService::makePayment($transaction, $user,$request->amount);
+
+
         return sendResponse('transaction created', [
             'payment_url' => $paymentUrl,
         ]);
@@ -77,15 +86,5 @@ class DonationController extends Controller
     private function getStreamer($username): User
     {
         return User::where('username', $username)->first();
-    }
-
-    public function verify(Request $request)
-    {
-        if ($request->status == 0) {
-            $transaction = Transaction::where('order_id', $request->OrderId)->first();
-            $payment = TransactionService::verifyTransaction($request->Token, $transaction);
-            dd($payment);
-        }
-        return 'error';
     }
 }
