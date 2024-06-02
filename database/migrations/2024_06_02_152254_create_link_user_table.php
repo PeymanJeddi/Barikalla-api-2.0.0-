@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('link_id');
             $table->string('value');
 
-            $table->primary(['center_id', 'link_id']);
-            $table->foreign('center_id')->references('id')->on('centers')->cascadeOnDelete();
+            $table->primary(['user_id', 'link_id']);
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('link_id')->references('id')->on('kinds')->restrictOnDelete();
         });
     }
