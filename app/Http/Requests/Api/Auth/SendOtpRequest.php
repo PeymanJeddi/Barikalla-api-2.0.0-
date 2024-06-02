@@ -22,18 +22,18 @@ class SendOtpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'mobile' => ['required', 'regex:/(0)([ ]|-|[()]){0,2}9[0-9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/', 'digits:11']
+            'phone_number' => ['required', 'regex:/(0)([ ]|-|[()]){0,2}9[0-9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/', 'digits:11']
         ];
     }
 
     public function prepareForValidation()
     {
         $this->merge([
-            'mobile' => toEnglishNumbers($this->input('mobile') ?? '')
+            'phone_number' => toEnglishNumbers($this->input('phone_number') ?? '')
         ]);
 
         $this->merge([
-            'mobile' => correctPhoneNumber($this->input('mobile') ?? '')
+            'phone_number' => correctPhoneNumber($this->input('phone_number') ?? '')
         ]);
     }
 }

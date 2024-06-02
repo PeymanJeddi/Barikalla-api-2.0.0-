@@ -95,7 +95,7 @@ class Otp extends Model
     private function updateCodeWithResponse($mobile, $code)
     {
         $this->updateOTP($code);
-        return sendResponse('کد با موفقیت ارسال شد', []);
+        return sendResponse('کد با موفقیت ارسال شد', ['phone_number' => $mobile]);
         
     }
 }

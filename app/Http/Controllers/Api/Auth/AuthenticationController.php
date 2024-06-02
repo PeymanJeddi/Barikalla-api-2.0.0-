@@ -38,7 +38,7 @@ class AuthenticationController extends Controller
      */
     public function sendOtp(SendOtpRequest $request)
     {
-        $response = Otp::generateCode($request->mobile, 'verifybarikalla');
+        $response = Otp::generateCode($request->phone_number, 'verifybarikalla');
         return $response;
     }
 
