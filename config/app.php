@@ -140,4 +140,13 @@ return [
 
     'payment_callback_url' => env('PAYMENT_CALLBACK_URL'),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | VIP package price
+    |--------------------------------------------------------------------------
+    */
+
+    'vip_package_price' => env('VIP_PACKAGE_PRICE'),
+
 ];
