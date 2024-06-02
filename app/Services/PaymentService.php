@@ -5,50 +5,13 @@ namespace App\Services;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
-class TransactionService extends Service
+class PaymentService extends Service
 {
-    public static function makeTransaction(User $user, User $streamer, int $amount, string $fullname, string $description = null)
+    public static function makePayment(Transaction $transaction, User $user, int $amount)
     {
-        $transaction = Transaction::create([
-            'user_id' => $user->id,
-            'streamer_id' => $streamer->id,
-            'amount' => $amount,
-            'fullname' => $fullname,
-            'description' => $description,
-            'mobile' => $user->mobile,
-            'type' => 'donate',
-        ]);
-        $paymentUrl = self::makePayment($user, $amount, $transaction);
-        return $paymentUrl;
-    }
-
-    private static function generateOrderId(): int
-    {
-        do {
-            $code = self::generateRandomNumber(); 
-        } while (self::isOrderIdExists($code));
-
-        return $code;
-    }
-
-    private static function isOrderIdExists($orderId): bool
-    {
-        return Transaction::where('order_id', $orderId)->exists();
-    }
-
-    private static function generateRandomNumber(): int
-    {
-        return mt_rand(1000000, 9999999) . mt_rand(1000000, 9999999);
-    }
-
-    private static function makePayment(User $user, int $amount, Transaction $transaction): string
-    {
- 
-
         try {
+
             do {
                 $orderId = self::generateOrderId();
                 $data = [
@@ -61,11 +24,11 @@ class TransactionService extends Service
                 ];
                 $response = Http::post('https://pna.shaparak.ir/mhipg/api/Payment/NormalSale', $data);
             } while ($response->json()['status'] == -112);
-            
+
+
             $transaction->update([
                 'order_id' => $orderId,
             ]);
-
         } catch (\Exception $e) {
             abort(500, $e->getMessage());
         }
@@ -78,7 +41,7 @@ class TransactionService extends Service
         }
     }
 
-    public static function verifyTransaction(string $token, Transaction $transaction)
+    public static function verifyPayment(string $token, Transaction $transaction)
     {
         $corporationPin = config('app.payment_corporation_pin');
 
@@ -100,7 +63,25 @@ class TransactionService extends Service
             'code' => 'test',
         ]);
 
-        WalletService::chargeWallet($transaction->streamer, $transaction->amount);
         return $payment;
+    }
+
+    private static function generateOrderId(): int
+    {
+        do {
+            $code = self::generateRandomNumber();
+        } while (self::isOrderIdExists($code));
+
+        return $code;
+    }
+
+    private static function generateRandomNumber(): int
+    {
+        return mt_rand(1000000, 9999999) . mt_rand(1000000, 9999999);
+    }
+
+    private static function isOrderIdExists($orderId): bool
+    {
+        return Transaction::where('order_id', $orderId)->exists();
     }
 }

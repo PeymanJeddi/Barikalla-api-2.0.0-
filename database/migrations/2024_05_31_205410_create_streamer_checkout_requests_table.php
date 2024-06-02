@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wallets', function (Blueprint $table) {
+        Schema::create('streamer_checkout_requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->unique();
-            $table->integer('credit')->default(0);
+            $table->unsignedBigInteger('user_id');
+            $table->bigInteger('current_credit');
+            $table->bigInteger('amount');
+            $table->boolean('is_paid')->default(0);
             $table->timestamps();
-            
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wallets');
+        Schema::dropIfExists('streamer_checkout_requests');
     }
 };

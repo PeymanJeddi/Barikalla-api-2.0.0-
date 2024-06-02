@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthenticationController;
-use App\Http\Controllers\Api\Donation\DonationController;
-use App\Http\Controllers\Api\Payment\PaymentController;
+use App\Http\Controllers\Api\Payment\CreditController;
+use App\Http\Controllers\Api\Payment\DonationController;
+use App\Http\Controllers\Api\Payment\VerifyController;
+use App\Http\Controllers\Api\Wallet\CheckoutController;
 use App\Http\Controllers\Api\Target\TargetController;
 use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Http\Request;
@@ -28,12 +30,20 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('payment')->group(function () {
-        Route::post('/transaction', [PaymentController::class, 'createTransaction']);
+        // Route::post('/transaction', [PaymentController::class, 'createTransaction']);
     });
-    
+   
+    Route::prefix('wallet')->group(function () {
+        Route::get('/checkoutrequest', [CheckoutController::class, 'index']);
+        Route::post('/checkoutrequest', [CheckoutController::class, 'store']);
+    });
+
+    Route::prefix('payment')->group(function () {
+        Route::post('/donate', [DonationController::class, 'makeDonate']);
+        Route::post('/addcredit', [CreditController::class, 'addCredit']);
+    });
 });
 
 Route::prefix('payment')->group(function () {
-    Route::post('/donate', [DonationController::class, 'makeDonate']);
-    Route::post('/verify', [DonationController::class, 'verify']);
+    Route::post('/verify', [VerifyController::class, 'verifyTransaction']);
 });

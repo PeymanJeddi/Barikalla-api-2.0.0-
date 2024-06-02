@@ -9,7 +9,7 @@ class WalletService extends Service
     public static function chargeWallet(User $user, $amount)
     {
         $userWallet = $user->wallet;
-        $userWallet->balance += $amount;
+        $userWallet->credit += $amount;
         $userWallet->save();
         return $userWallet;
     }
