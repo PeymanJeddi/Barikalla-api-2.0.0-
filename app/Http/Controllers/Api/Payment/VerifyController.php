@@ -21,7 +21,9 @@ class VerifyController extends Controller
             } else if ($transaction->type == 'charge') {
                 WalletService::chargeWallet($transaction->user, $transaction->amount);
             } else if ($transaction->type == 'subscription') {
-                echo 'subscribed';
+                $vipPackagePrice = config('app.vip_package_price');
+                $months = $transaction->amount / $vipPackagePrice;
+                $transaction->user->assignRole('vip');
             }
 
             dd($payment);

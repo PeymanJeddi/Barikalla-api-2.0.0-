@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\AuthenticationController;
 use App\Http\Controllers\Api\Payment\CreditController;
 use App\Http\Controllers\Api\Payment\DonationController;
+use App\Http\Controllers\Api\Payment\SubscribeController;
 use App\Http\Controllers\Api\Payment\VerifyController;
 use App\Http\Controllers\Api\Wallet\CheckoutController;
 use App\Http\Controllers\Api\Target\TargetController;
@@ -41,6 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('payment')->group(function () {
         Route::post('/donate', [DonationController::class, 'makeDonate']);
         Route::post('/addcredit', [CreditController::class, 'addCredit']);
+        Route::post('/buysubscribe', [SubscribeController::class, 'buySubscribe']);
     });
 });
 
