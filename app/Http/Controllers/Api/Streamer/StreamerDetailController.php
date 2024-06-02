@@ -12,6 +12,31 @@ use Illuminate\Http\Request;
 class StreamerDetailController extends Controller
 {
     /**
+     * @OA\Get(
+     * path="/api/streamer/streamerdetail",
+     * operationId="streamerDetailIndex",
+     * tags={"Streamer"},
+     * summary="Get streamer detail",
+     * security={ {"sanctum": {} }},
+     * @OA\Response(
+     *    response=200,
+     *    description="Your request has been successfully completed.",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="success", type="bool", example="true"),
+     *       @OA\Property(property="message", type="string", example="Your request has been successfully completed."),
+     *       @OA\Property(property="data"),
+     *        )
+     *     ),
+     * )
+     */
+    public function index()
+    {
+        $user = auth()->user();
+        return sendResponse('اطلاعات استریمر', new StreamerDetailResource($user->streamerDetail));
+    }
+
+
+    /**
      * @OA\Patch(
      * path="/api/streamer/streamerdetail",
      * operationId="streamerDetailUpdate",

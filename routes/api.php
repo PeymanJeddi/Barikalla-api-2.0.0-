@@ -55,6 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('streamer')->group(function() {
         Route::get('/config', [StreamerDetailController::class, 'config']);
         Route::patch('/streamerdetail', [StreamerDetailController::class, 'update']);
+        Route::get('/streamerdetail', [StreamerDetailController::class, 'index']);
     });
 });
 
