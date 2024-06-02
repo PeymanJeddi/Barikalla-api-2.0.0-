@@ -49,6 +49,7 @@ class UserController extends Controller
      *       @OA\Property(property="first_name", type="string", format="string", example="iman"),
      *       @OA\Property(property="last_name", type="string", format="string", example="ahmadi"),
      *       @OA\Property(property="username", type="string", format="string", example="4example"),
+     *       @OA\Property(property="referral_username", type="string", format="string", example="4example"),
      *       @OA\Property(property="birthday", type="date", format="date", example="2021-02-23"),
      *       @OA\Property(property="description", type="text", format="text", example="this is test description"),
      *    ),
@@ -70,6 +71,10 @@ class UserController extends Controller
         $user->update([
             ...$request->validated(),
         ]);
+        if ($user->referral_username == null && $request->has('referral_username')) {
+            $user->referral_username = $request->referral_username;
+            $user->save();
+        }
         return sendResponse('User updated', new UserResource($user));
     }
 

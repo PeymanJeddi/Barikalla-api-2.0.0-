@@ -21,6 +21,7 @@ class UserResource extends JsonResource
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'username' => $this->username,
+            'referral_username' => $this->referral_username,
             'mobile' => $this->mobile,
             'birthday' => Carbon::parse($this->getRawOriginal('birthday'))
             ->getTimestamp(),
