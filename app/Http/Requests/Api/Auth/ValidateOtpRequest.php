@@ -22,8 +22,8 @@ class ValidateOtpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone_number' => 'required|size:4',
-            'mobile' => ['required', 'regex:/(0)([ ]|-|[()]){0,2}9[0-9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/', 'digits:11']
+            'code' => 'required|size:6',
+            'phone_number' => ['required', 'regex:/(0)([ ]|-|[()]){0,2}9[0-9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/', 'digits:11']
         ];
     }
 
