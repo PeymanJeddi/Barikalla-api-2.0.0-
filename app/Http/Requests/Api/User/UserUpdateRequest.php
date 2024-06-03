@@ -23,8 +23,8 @@ class UserUpdateRequest extends FormRequest
     {
         $userId = auth()->id();
         return [
-            'first_name' => ['required', 'max:255'],
-            'last_name' => ['required', 'max:255'],
+            'first_name' => ['nullable', 'max:255'],
+            'last_name' => ['nullable', 'max:255'],
             'username' => ['required', 'max:255', "unique:users,username,$userId"],
             'referral_username' => ['nullable', 'exists:users,username'],
             'description' => ['nullable', 'max:3000'],
