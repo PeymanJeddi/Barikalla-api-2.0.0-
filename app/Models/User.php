@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -96,5 +97,10 @@ class User extends Authenticatable
     public function streamerDetail(): HasOne
     {
         return $this->hasOne(StreamerDetail::class);
+    }
+
+    public function links(): BelongsToMany
+    {
+        return $this->belongsToMany(Kind::class, 'link_user', 'user_id', 'link_id')->withPivot('value');
     }
 }
