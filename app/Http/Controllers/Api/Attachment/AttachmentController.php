@@ -19,7 +19,7 @@ class AttachmentController extends Controller
     
     /**
      * @OA\Post(
-     * path="/api/attachment/",
+     * path="/api/attachment",
      * operationId="uploadAttachment",
      * tags={"Attachment"},
      * summary="Upload attachment",
