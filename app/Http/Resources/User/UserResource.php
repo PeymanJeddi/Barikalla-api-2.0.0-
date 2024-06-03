@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'last_name' => $this->last_name,
             'username' => $this->username,
             'referral_username' => $this->referral_username,
-            'mobile' => $this->mobile,
+            'phone_number' => $this->mobile,
             'birthday' => Carbon::parse($this->getRawOriginal('birthday'))
             ->getTimestamp(),
             'description' => $this->description,

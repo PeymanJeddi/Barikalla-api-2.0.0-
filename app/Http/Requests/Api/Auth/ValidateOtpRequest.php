@@ -22,7 +22,7 @@ class ValidateOtpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'required|size:4',
+            'phone_number' => 'required|size:4',
             'mobile' => ['required', 'regex:/(0)([ ]|-|[()]){0,2}9[0-9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/', 'digits:11']
         ];
     }
@@ -31,11 +31,11 @@ class ValidateOtpRequest extends FormRequest
     {
         $this->merge([
             'code' => toEnglishNumbers($this->input('code') ?? ''),
-            'mobile' => toEnglishNumbers($this->input('mobile') ?? '')
+            'phone_number' => toEnglishNumbers($this->input('phone_number') ?? '')
         ]);
 
         $this->merge([
-            'mobile' => correctPhoneNumber($this->input('mobile') ?? '')
+            'phone_number' => correctPhoneNumber($this->input('phone_number') ?? '')
         ]);
     }
 }
