@@ -22,7 +22,7 @@ class AuthenticationController extends Controller
      *    required=true,
      *    description="attempt send otp",
      *    @OA\JsonContent(
-     *       @OA\Property(property="mobile", type="string", format="string", example="09000000000"),
+     *       @OA\Property(property="phone_number", type="string", format="string", example="09000000000"),
      *    ),
      * ),
      * @OA\Response(
@@ -52,8 +52,8 @@ class AuthenticationController extends Controller
      *    required=true,
      *    description="attempt send otp",
      *    @OA\JsonContent(
-     *       @OA\Property(property="code", type="string", format="string", example="1122"),
-     *       @OA\Property(property="mobile", type="string", format="string", example="09000000000"),
+     *       @OA\Property(property="code", type="string", format="string", example="112233"),
+     *       @OA\Property(property="phone_number", type="string", format="string", example="09000000000"),
      *    ),
      * ),
      * @OA\Response(
