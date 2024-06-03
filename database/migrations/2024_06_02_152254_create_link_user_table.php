@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('link_user', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('link_id');
             $table->string('value');
 
-            $table->primary(['user_id', 'link_id']);
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('link_id')->references('id')->on('kinds')->restrictOnDelete();
         });
