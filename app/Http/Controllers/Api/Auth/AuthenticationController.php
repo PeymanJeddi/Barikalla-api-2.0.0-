@@ -69,7 +69,7 @@ class AuthenticationController extends Controller
      */
     public function validateOtp(ValidateOtpRequest $request)
     {
-        $mobile = $request->mobile;
+        $mobile = $request->phone_number;
 
         $token = $this->getOtpToken($mobile, $request->code);
         if (empty($token)) {
