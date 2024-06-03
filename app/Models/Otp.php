@@ -28,7 +28,7 @@ class Otp extends Model
             $code = $oldCodeobj->code;
         } else {
             do {
-                $code = mt_rand(1000, 9999);
+                $code = mt_rand(100000, 999999);
             } while ($this->checkCodeIsUnique($mobile, $code));
             $this->saveOtpToken($mobile, $code);
             return $this->sendSMS($mobile, $code, $smsTemplate);
