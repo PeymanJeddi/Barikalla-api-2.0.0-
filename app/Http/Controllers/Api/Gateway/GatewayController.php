@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Api\Streamer;
+namespace App\Http\Controllers\Api\Gateway;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Streamer\StreamerDetailUpdateRequest;
+use App\Http\Requests\Api\Gateway\GatewayUpdateRequest;
 use App\Http\Resources\Common\KindResource;
-use App\Http\Resources\Streamer\StreamerDetailResource;
+use App\Http\Resources\Gateway\GatewayResource;
 use App\Models\Kind;
-use Illuminate\Http\Request;
 
-class StreamerDetailController extends Controller
+class GatewayController extends Controller
 {
     /**
      * @OA\Get(
-     * path="/api/streamer/streamerdetail",
-     * operationId="streamerDetailIndex",
-     * tags={"Streamer"},
-     * summary="Get streamer detail",
+     * path="/api/streamer/gateway",
+     * operationId="gatewayIndex",
+     * tags={"Gateway"},
+     * summary="Get gateway detail",
      * security={ {"sanctum": {} }},
      * @OA\Response(
      *    response=200,
@@ -32,20 +31,20 @@ class StreamerDetailController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return sendResponse('اطلاعات استریمر', new StreamerDetailResource($user->streamerDetail));
+        return sendResponse('اطلاعات درگاه', new GatewayResource($user->gateway));
     }
 
 
     /**
      * @OA\Patch(
-     * path="/api/streamer/streamerdetail",
-     * operationId="streamerDetailUpdate",
-     * tags={"Streamer"},
-     * summary="Update streamer details",
+     * path="/api/streamer/gateway",
+     * operationId="gatewayUpdate",
+     * tags={"Gateway"},
+     * summary="Update gateway details",
      * security={ {"sanctum": {} }},
      * @OA\RequestBody(
      *    required=true,
-     *    description="attempt streamer detail",
+     *    description="attempt gateway detail",
      *    @OA\JsonContent(
      *       required={"nickname", "is_payment_active", "job_id", "min_donate", "max_donate", "is_donator_pay_wage", "is_donator_pay_tax"},
      *       @OA\Property(property="nickname", type="string", format="string", example="bigezmog"),
@@ -68,21 +67,21 @@ class StreamerDetailController extends Controller
      *     ),
      * )
      */
-    public function update(StreamerDetailUpdateRequest $request)
+    public function update(GatewayUpdateRequest $request)
     {
         $user = $request->user();
-        $user->streamerDetail()->update([
+        $user->gateway()->update([
             ...$request->validated(),
         ]);
-        return sendResponse('اطلاعات استریمر آپدیت شد', new StreamerDetailResource($user->streamerDetail));
+        return sendResponse('اطلاعات درگاه آپدیت شد', new GatewayResource($user->gateway));
     }
 
     /**
      * @OA\Get(
-     * path="/api/streamer/config",
-     * operationId="streamerDetailConfig",
-     * tags={"Streamer"},
-     * summary="Get streamer detail config",
+     * path="/api/streamer/gateway/config",
+     * operationId="gatewayConfig",
+     * tags={"Gateway"},
+     * summary="Get gateway config",
      * security={ {"sanctum": {} }},
      * @OA\Response(
      *    response=200,

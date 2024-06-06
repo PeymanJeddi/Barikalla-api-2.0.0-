@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\Api\Attachment\AttachmentController;
 use App\Http\Controllers\Api\Auth\AuthenticationController;
+use App\Http\Controllers\Api\Gateway\GatewayController;
 use App\Http\Controllers\Api\Payment\CreditController;
 use App\Http\Controllers\Api\Payment\DonationController;
 use App\Http\Controllers\Api\Payment\SubscribeController;
 use App\Http\Controllers\Api\Payment\VerifyController;
-use App\Http\Controllers\Api\Streamer\StreamerDetailController;
 use App\Http\Controllers\Api\Wallet\CheckoutController;
 use App\Http\Controllers\Api\Target\TargetController;
 use App\Http\Controllers\Api\User\Link\LinkController;
@@ -61,9 +61,9 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('streamer')->group(function() {
-        Route::get('/config', [StreamerDetailController::class, 'config']);
-        Route::patch('/streamerdetail', [StreamerDetailController::class, 'update']);
-        Route::get('/streamerdetail', [StreamerDetailController::class, 'index']);
+        Route::get('/config', [GatewayController::class, 'config']);
+        Route::patch('/gateway', [GatewayController::class, 'update']);
+        Route::get('/gateway', [GatewayController::class, 'index']);
     });
 });
 

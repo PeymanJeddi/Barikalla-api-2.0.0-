@@ -52,7 +52,7 @@ class User extends Authenticatable
         // Create wallet for a user when it created
         static::created(function (User $user) {
             $user->wallet()->create();
-            $user->streamerDetail()->create();
+            $user->gateway()->create();
         });
     }
 
@@ -94,9 +94,9 @@ class User extends Authenticatable
         return $this->morphOne(Attachment::class, 'attachable')->where('type', 'avatar');
     }
 
-    public function streamerDetail(): HasOne
+    public function gateway(): HasOne
     {
-        return $this->hasOne(StreamerDetail::class);
+        return $this->hasOne(Gateway::class);
     }
 
     public function links(): BelongsToMany

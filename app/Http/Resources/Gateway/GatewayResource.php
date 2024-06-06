@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Streamer;
+namespace App\Http\Resources\Gateway;
 
 use App\Http\Resources\Common\KindResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class StreamerDetailResource extends JsonResource
+class GatewayResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

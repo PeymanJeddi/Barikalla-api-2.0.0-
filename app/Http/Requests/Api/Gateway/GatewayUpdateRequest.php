@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Streamer;
+namespace App\Http\Requests\Api\Gateway;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StreamerDetailUpdateRequest extends FormRequest
+class GatewayUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
