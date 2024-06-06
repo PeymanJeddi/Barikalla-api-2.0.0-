@@ -48,6 +48,7 @@ class GatewayController extends Controller
      *    @OA\JsonContent(
      *       required={"nickname", "is_payment_active", "job_id", "min_donate", "max_donate", "is_donator_pay_wage", "is_donator_pay_tax"},
      *       @OA\Property(property="nickname", type="string", format="string", example="bigezmog"),
+     *       @OA\Property(property="biography", type="text", format="text", example="test test test"),
      *       @OA\Property(property="is_payment_active", type="boolean", format="boolean", example=1),
      *       @OA\Property(property="job_id", type="integer", format="integer", example=5),
      *       @OA\Property(property="min_donate", type="integer", format="integer", example=6000),

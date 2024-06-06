@@ -17,6 +17,7 @@ class GatewayResource extends JsonResource
     {
         return [
             'nickname' => $this->nickname,
+            'biography' => $this->biography,
             'is_payment_active' => $this->is_payment_active,
             'job' => new KindResource($this->job),
             'min_donate' => $this->min_donate,

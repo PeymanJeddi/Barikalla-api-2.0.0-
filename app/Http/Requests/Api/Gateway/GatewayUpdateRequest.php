@@ -23,6 +23,7 @@ class GatewayUpdateRequest extends FormRequest
     {
         return [
             'nickname' => ['required', 'max:255'],
+            'biography' => ['required', 'max:3000'],
             'is_payment_active' => ['required', 'boolean'],
             'job_id' => ['required', 'exists:kinds,id'],
             'min_donate' => ['required', 'integer', 'min:5000'],
