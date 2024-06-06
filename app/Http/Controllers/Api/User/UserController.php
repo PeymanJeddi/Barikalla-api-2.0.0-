@@ -68,13 +68,13 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request)
     {
         $user = $request->user();
-        $user->update([
-            ...$request->validated(),
-        ]);
-        if ($user->referral_username == null && $request->has('referral_username')) {
+        if (($user->referral_username == null && $request->has('referral_username')) && ($user->username == null && $request->has('username'))) {
             $user->referral_username = $request->referral_username;
             $user->save();
         }
+        $user->update([
+            ...$request->validated(),
+        ]);
         return sendResponse('User updated', new UserResource($user));
     }
 
