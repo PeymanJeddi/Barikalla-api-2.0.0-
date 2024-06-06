@@ -82,8 +82,10 @@ class AuthenticationController extends Controller
 
         $user = $this->authenticateUser($mobile);
         $token = $this->generateAPIToken($user);
-        if ($user->first_name == null || $user->last_name == null) {
-            $userStatus = 'complete_info';
+        if ($user->username == null) {
+            $userStatus = 'signup';
+        } else if ($user->first_name == null || $user->last_name == null || $user->description == null || $user->birthday == null || $user->avatar()->count() == 0) {
+            $userStatus = 'incomplete';
         } else {
             $userStatus = 'completed';
         }
