@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Payment\CreditController;
 use App\Http\Controllers\Api\Payment\DonationController;
 use App\Http\Controllers\Api\Payment\SubscribeController;
 use App\Http\Controllers\Api\Payment\VerifyController;
+use App\Http\Controllers\Api\Streamer\StreamerController;
 use App\Http\Controllers\Api\Wallet\CheckoutController;
 use App\Http\Controllers\Api\Target\TargetController;
 use App\Http\Controllers\Api\User\Link\LinkController;
@@ -65,6 +66,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/gateway', [GatewayController::class, 'update']);
         Route::get('/gateway', [GatewayController::class, 'index']);
     });
+
+    Route::get('/gateway/{user:username}', [StreamerController::class, 'show']);
 });
 
 Route::prefix('payment')->group(function () {
