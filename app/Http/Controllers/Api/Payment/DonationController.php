@@ -54,7 +54,7 @@ class DonationController extends Controller
             'amount' => $request->amount,
             'fullname' => $request->fullname,
             'description' => $request->description,
-            'mobile' => $user->mobile,
+            'mobile' => $user->phone_number,
             'type' => 'donate',
         ]);
 

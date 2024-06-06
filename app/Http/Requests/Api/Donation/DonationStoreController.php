@@ -24,7 +24,7 @@ class DonationStoreController extends FormRequest
         return [
             'streamer_username' => ['required', 'exists:users,username'],
             'amount' => ['required', 'integer', 'min:1000'],
-            'mobile' => ['required', 'regex:/(0)([ ]|-|[()]){0,2}9[0-9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/', 'digits:11'],
+            'phone_number' => ['required', 'regex:/(0)([ ]|-|[()]){0,2}9[0-9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/', 'digits:11'],
             'fullname' => ['required', 'max:255'],
             'description' => ['nullable', 'max:3000'],
         ];
@@ -33,11 +33,11 @@ class DonationStoreController extends FormRequest
     public function prepareForValidation()
     {
         $this->merge([
-            'mobile' => toEnglishNumbers($this->input('mobile') ?? '')
+            'phone_number' => toEnglishNumbers($this->input('phone_number') ?? '')
         ]);
 
         $this->merge([
-            'mobile' => correctPhoneNumber($this->input('mobile') ?? '')
+            'phone_number' => correctPhoneNumber($this->input('phone_number') ?? '')
         ]);
     }
 }
