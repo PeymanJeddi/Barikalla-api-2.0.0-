@@ -101,6 +101,6 @@ class User extends Authenticatable
 
     public function links(): BelongsToMany
     {
-        return $this->belongsToMany(Kind::class, 'link_user', 'user_id', 'link_id')->withPivot('value');
+        return $this->belongsToMany(Kind::class, 'link_user', 'user_id', 'link_id')->withPivot('value')->withPivot('alt');
     }
 }

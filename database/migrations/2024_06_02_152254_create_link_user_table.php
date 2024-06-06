@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('link_id');
             $table->string('value');
+            $table->string('alt');
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('link_id')->references('id')->on('kinds')->restrictOnDelete();

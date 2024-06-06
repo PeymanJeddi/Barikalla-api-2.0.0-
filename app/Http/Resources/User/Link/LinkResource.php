@@ -21,6 +21,7 @@ class LinkResource extends JsonResource
                 'prefix' => $this->value_2,
             ],
             'value' => $this->pivot->value,
+            'alt' => $this->pivot->alt,
             'url' => $this->value_2 . $this->pivot->value,
         ];
     }

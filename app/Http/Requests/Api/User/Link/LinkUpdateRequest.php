@@ -25,6 +25,7 @@ class LinkUpdateRequest extends FormRequest
             'links' => 'required|array',
             'links.*.link_id' => 'required|exists:kinds,id',
             'links.*.value' => 'required',
+            'links.*.alt' => 'nullable|max:255',
         ];
     }
 }

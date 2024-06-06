@@ -48,7 +48,7 @@ class LinkController extends Controller
      *    description="attempt streamer target",
      *    @OA\JsonContent(
      *       required={"title", "target"},
-     *       @OA\Property(property="links", type="array", format="array", example={{"link_id": 5, "value": "iman"}}, @OA\Items()),
+     *       @OA\Property(property="links", type="array", format="array", example={{"link_id": 5, "value": "iman", "alt": "test"}}, @OA\Items()),
      *    ),
      * ),
      * @OA\Response(
@@ -64,10 +64,11 @@ class LinkController extends Controller
      */
     public function update(LinkUpdateRequest $request)
     {
+        // TODO add link_id validation here
         $user   = $request->user();
         $user->links()->detach();
         foreach ($request->links as $link) {
-            $user->links()->attach($link['link_id'], ['value' => $link['value']]);
+            $user->links()->attach($link['link_id'], ['value' => $link['value'], 'alt' => $link['alt']]);
         }
         return sendResponse('لینک‌ها بروزرسانی شدند', LinkResource::collection($user->links));
     }
