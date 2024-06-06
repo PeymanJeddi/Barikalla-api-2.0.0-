@@ -31,7 +31,14 @@ class UserController extends Controller
     public function show()
     {
         $user = auth()->user();
-        return sendResponse('User data', new UserResource($user));
+        if ($user->username == null) {
+            $step = 'signup';
+        } else if ($user->first_name == null || $user->last_name == null || $user->description == null || $user->birthday == null || $user->avatar()->count() == 0) {
+            $step = 'incomplete';
+        } else {
+            $step = 'completed';
+        }
+        return sendResponse('User data', ['user' => new UserResource($user), 'step' => $step]);
     }
 
     /**
