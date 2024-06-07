@@ -53,6 +53,7 @@ class UserController extends Controller
      *    description="attempt update user",
      *    @OA\JsonContent(
      *       required={"first_name", "last_name", "username"},
+     *       @OA\Property(property="nickname", type="string", format="string", example="bigezmog"),
      *       @OA\Property(property="first_name", type="string", format="string", example="iman"),
      *       @OA\Property(property="last_name", type="string", format="string", example="ahmadi"),
      *       @OA\Property(property="username", type="string", format="string", example="4example"),

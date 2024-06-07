@@ -24,6 +24,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'nickname',
         'first_name',
         'last_name',
         'mobile',
@@ -53,6 +54,7 @@ class User extends Authenticatable
         static::created(function (User $user) {
             $user->wallet()->create();
             $user->gateway()->create();
+            $user->assignRole('streamer');
         });
     }
 
