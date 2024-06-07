@@ -22,7 +22,6 @@ class GatewayUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nickname' => ['required', 'max:255'],
             'biography' => ['required', 'max:3000'],
             'is_payment_active' => ['required', 'boolean'],
             'job_id' => ['required', 'exists:kinds,id'],

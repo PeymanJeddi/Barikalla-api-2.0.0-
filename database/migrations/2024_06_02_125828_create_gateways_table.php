@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('gateways', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('nickname')->nullable();
             $table->text('biography')->nullable();
             $table->boolean('is_payment_active')->default(0);
             $table->unsignedBigInteger('job_id')->nullable();
