@@ -19,12 +19,17 @@ return new class extends Migration
             $table->string('nickname')->nullable();
             $table->string('referral_username')->nullable();
             $table->timestamp('birthday')->nullable();
-            $table->text('description')->nullable();
+            $table->string('gender')->comment('male|female|other')->nullable();
+            $table->string('national_id')->nullable();
+            $table->string('address')->nullable();
+            $table->string('postalcode')->nullable();
             $table->string('mobile', 11)->unique();
+            $table->string('fix_phone_number')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->boolean('is_active')->default(0);
+            $table->string('status')->comment('incomplete|pending|rejected|verified')->default('incomplete');
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
