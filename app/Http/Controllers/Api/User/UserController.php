@@ -54,12 +54,8 @@ class UserController extends Controller
      *    @OA\JsonContent(
      *       required={"first_name", "last_name", "username"},
      *       @OA\Property(property="nickname", type="string", format="string", example="bigezmog"),
-     *       @OA\Property(property="first_name", type="string", format="string", example="iman"),
-     *       @OA\Property(property="last_name", type="string", format="string", example="ahmadi"),
      *       @OA\Property(property="username", type="string", format="string", example="4example"),
      *       @OA\Property(property="referral_username", type="string", format="string", example="4example"),
-     *       @OA\Property(property="birthday", type="date", format="date", example="2021-02-23"),
-     *       @OA\Property(property="description", type="text", format="text", example="this is test description"),
      *    ),
      * ),
      * @OA\Response(
