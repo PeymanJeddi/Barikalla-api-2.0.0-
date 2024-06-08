@@ -32,7 +32,11 @@ class User extends Authenticatable
         'password',
         'username',
         'birthday',
-        'description',
+        'gender',
+        'national_id',
+        'address',
+        'postalcode',
+        'fix_phone_number',
     ];
 
     /**
@@ -45,6 +49,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $guard_name = 'api';
     /**
      * The "booted" method of the model.
      */
