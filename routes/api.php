@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Attachment\AttachmentController;
 use App\Http\Controllers\Api\Auth\AuthenticationController;
 use App\Http\Controllers\Api\Gateway\GatewayController;
+use App\Http\Controllers\Api\Identity\IdentityController;
 use App\Http\Controllers\Api\Payment\CreditController;
 use App\Http\Controllers\Api\Payment\DonationController;
 use App\Http\Controllers\Api\Payment\SubscribeController;
@@ -68,6 +69,11 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::get('/gateway/{user:username}', [StreamerController::class, 'show']);
+    
+    Route::prefix('identity')->group(function () {
+        Route::get('/', [IdentityController::class, 'index']);
+        Route::patch('/', [IdentityController::class, 'update']);
+    });
 });
 
 Route::prefix('payment')->group(function () {
