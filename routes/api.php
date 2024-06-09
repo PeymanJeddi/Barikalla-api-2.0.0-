@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\Wallet\CheckoutController;
 use App\Http\Controllers\Api\Target\TargetController;
 use App\Http\Controllers\Api\User\Link\LinkController;
 use App\Http\Controllers\Api\User\UserController;
+use App\Http\Controllers\Api\Wallet\WalletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,8 +48,12 @@ Route::middleware('auth:sanctum')->group(function () {
     });
    
     Route::prefix('wallet')->group(function () {
+        Route::get('/', [WalletController::class, 'index']);
+        Route::patch('/', [WalletController::class, 'update']);
         Route::get('/checkoutrequest', [CheckoutController::class, 'index']);
         Route::post('/checkoutrequest', [CheckoutController::class, 'store']);
+
+
     });
 
     Route::prefix('payment')->group(function () {
