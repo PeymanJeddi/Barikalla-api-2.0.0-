@@ -25,10 +25,10 @@ class DonationController extends Controller
      *    required=true,
      *    description="attempt transaction",
      *    @OA\JsonContent(
-     *       required={"streamer_username", "amount", "mobile", "fullname"},
+     *       required={"streamer_username", "amount", "phone_number", "fullname"},
      *       @OA\Property(property="streamer_username", type="string", format="string", example="4example"),
      *       @OA\Property(property="amount", type="integer", format="tooman", example="1000"),
-     *       @OA\Property(property="mobile", type="string", format="string", example="09000000000"),
+     *       @OA\Property(property="phone_number", type="string", format="string", example="09000000000"),
      *       @OA\Property(property="fullname", type="string", format="string", example="my full name"),
      *       @OA\Property(property="description", type="text", format="text", example="this is test description."),
      *    ),
@@ -46,7 +46,7 @@ class DonationController extends Controller
      */
     public function makeDonate(DonationStoreController $request)
     {
-        $user = $this->getUser($request->mobile);
+        $user = $this->getUser($request->phone_number);
         $streamer = $this->getStreamer($request->streamer_username);
         $transaction = Transaction::create([
             'user_id' => $user->id,
@@ -54,7 +54,7 @@ class DonationController extends Controller
             'amount' => $request->amount,
             'fullname' => $request->fullname,
             'description' => $request->description,
-            'mobile' => $user->phone_number,
+            'mobile' => $user->mobile,
             'type' => 'donate',
         ]);
 
