@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->boolean('is_active')->default(0);
             $table->string('status')->comment('incomplete|pending|rejected|verified')->default('incomplete');
+            $table->enum('wage_type', ['default', 'none', 'custom'])->default('default');
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
