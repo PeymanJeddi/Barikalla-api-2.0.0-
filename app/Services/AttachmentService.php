@@ -22,7 +22,7 @@ class AttachmentService extends Service
     public function makeUpload(
         UploadedFile $file,
         Model $model,
-        $type,
+        $typeId,
         $scale = null,
         $title = ''
     ){
@@ -43,7 +43,7 @@ class AttachmentService extends Service
             'original_name' => $file->getClientOriginalName(),
             'size' => $file->getSize(),
             'user_id' => auth()->user()->id,
-            'type' => $type,
+            'type_id' => $typeId,
             'attachable_id' => $model->getKey(),
             'attachable_type' => $model->getMorphClass(),
         ]);

@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             JobSeeder::class,
             LinkSeeder::class,
             RoleTableSeeder::class,
+            UploadTypeTableSeeder::class,
         ]);
     }
 }

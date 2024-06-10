@@ -63,8 +63,9 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('attachment')->group(function() {
-        Route::post('/', [AttachmentController::class, 'upload']);
+        Route::post('/', [AttachmentController::class, 'store']);
         Route::delete('/{attachment}', [AttachmentController::class, 'destroy']);
+        Route::get('/config', [AttachmentController::class, 'config']);
     });
 
     Route::prefix('streamer')->group(function() {

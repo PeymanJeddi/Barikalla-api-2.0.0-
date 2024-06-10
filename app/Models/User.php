@@ -98,7 +98,17 @@ class User extends Authenticatable
 
     public function avatar(): MorphOne
     {
-        return $this->morphOne(Attachment::class, 'attachable')->where('type', 'avatar');
+        return $this->morphOne(Attachment::class, 'attachable')->whereRelation('type', 'key', 'avatar');
+    }
+
+    public function birthCertificate(): MorphOne
+    {
+        return $this->morphOne(Attachment::class, 'attachable')->whereRelation('type', 'key', 'birth-certificate');
+    }
+
+    public function nationalCard(): MorphOne
+    {
+        return $this->morphOne(Attachment::class, 'attachable')->whereRelation('type', 'key', 'national-card');
     }
 
     public function gateway(): HasOne

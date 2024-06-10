@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Identity;
 
+use App\Http\Resources\Attachment\AttachmentResource;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -26,8 +27,8 @@ class IdentityResource extends JsonResource
             'postalcode' => $this->postalcode,
             'fix_phone_number' => $this->fix_phone_number,
             'documents' => [
-                'birth_certificate' => null,
-                'national_card' => null,
+                'birth_certificate' => new AttachmentResource($this->birthCertificate),
+                'national_card' => new AttachmentResource($this->nationalCard),
             ],
             'status' => $this->status,
         ];
