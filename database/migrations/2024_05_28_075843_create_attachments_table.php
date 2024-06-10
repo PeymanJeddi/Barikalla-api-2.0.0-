@@ -21,11 +21,12 @@ return new class extends Migration
             $table->string('mime')->nullable();
             $table->string('size');
             $table->string('original_name')->nullable();
-            $table->string('type')->comment('avatar|mellie_cart');
+            $table->unsignedBigInteger('type_id')->nullable();
             $table->morphs('attachable');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('type_id')->references('id')->on('kinds')->restrictOnDelete();
         });
     }
 
