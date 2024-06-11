@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api\Payment;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Payment\BuySubscribeRequest;
+use App\Models\Kind;
 use App\Models\Transaction;
 use App\Services\PaymentService;
-use Illuminate\Http\Request;
 
 class SubscribeController extends Controller
 {
@@ -46,7 +46,7 @@ class SubscribeController extends Controller
             'mobile' => $user->mobile,
             'type' => 'subscription',
         ]);
-        $amount = config('app.vip_package_price') * $request->months;
+        $amount =  Kind::where('key', 'vip_package_price')->first()->value_2 * $request->months;
         $paymentUrl = PaymentService::makePayment($transaction, $user, $amount);
         return sendResponse('transaction created', [
             'payment_url' => $paymentUrl,
