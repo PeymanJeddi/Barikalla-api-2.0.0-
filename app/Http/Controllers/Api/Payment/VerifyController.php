@@ -24,7 +24,7 @@ class VerifyController extends Controller
                 $amountToBeCharge = $this->calculateAmount($streamer, $transaction);
                 WalletService::chargeWallet($streamer, $amountToBeCharge);
             } else if ($transaction->type == 'charge') {
-                WalletService::chargeWallet($transaction->user, $transaction->amount);
+                WalletService::chargeWallet($transaction->user, $transaction->raw_amount);
             } else if ($transaction->type == 'subscription') {
                 $vipPackagePrice = Kind::where('key', 'vip_package_price')->first()->value_2;
                 $months = $transaction->amount / $vipPackagePrice;

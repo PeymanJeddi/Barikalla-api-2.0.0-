@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Payment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Wallet\AddCreditRequest;
 use App\Models\Transaction;
+use App\Services\DonateAmountService;
 use App\Services\PaymentService;
 
 class CreditController extends Controller
@@ -39,14 +40,16 @@ class CreditController extends Controller
     public function addCredit(AddCreditRequest $request)
     {
         $user = $request->user();
+        $finalAmount = DonateAmountService::calculateTax($request->amount) + $request->amount;
         $transaction = Transaction::create([
             'user_id' => $user->id,
-            'amount' => $request->amount,
+            'amount' => $finalAmount,
+            'raw_amount' => $request->amount,
             'mobile' => $user->mobile,
             'type' => 'charge',
         ]);
         
-        $paymentUrl = PaymentService::makePayment($transaction, $user, $request->amount);
+        $paymentUrl = PaymentService::makePayment($transaction, $user, $finalAmount);
         return sendResponse('transaction created', [
             'payment_url' => $paymentUrl,
         ]);
