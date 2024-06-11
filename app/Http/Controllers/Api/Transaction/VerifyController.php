@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Payment;
+namespace App\Http\Controllers\Api\Transaction;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kind;

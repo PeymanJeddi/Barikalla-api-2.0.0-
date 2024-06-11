@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Payment;
+namespace App\Http\Controllers\Api\Transaction;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Donation\DonationStoreController;
@@ -15,9 +15,9 @@ class DonationController extends Controller
 
     /**
      * @OA\Post(
-     * path="/api/payment/donate",
+     * path="/api/transaction/donate",
      * operationId="createDonation",
-     * tags={"Payment"},
+     * tags={"Transaction"},
      * summary="Create donations",
      * security={ {"sanctum": {} }},
      * @OA\RequestBody(
