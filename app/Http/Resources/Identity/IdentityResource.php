@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Identity;
 
 use App\Http\Resources\Attachment\AttachmentResource;
+use App\Http\Resources\Common\KindResource;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -23,6 +24,7 @@ class IdentityResource extends JsonResource
             'birthday' => $this->when($this->birthday == null, null, Carbon::parse($this->birthday)
             ->getTimestamp() ),
             'national_id' => $this->national_id,
+            'city' => new KindResource($this->city),
             'address' => $this->address,
             'email' => $this->email,
             'mobile' => $this->mobile,
