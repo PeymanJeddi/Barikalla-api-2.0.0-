@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('streamer_id')->nullable();
-            $table->integer('amount')->nullable();
+            $table->bigInteger('amount')->nullable();
+            $table->bigInteger('raw_amount')->nullable();
             $table->string('fullname')->nullable();
             $table->bigInteger('order_id')->unique()->nullable();
             $table->string('mobile', 11);
