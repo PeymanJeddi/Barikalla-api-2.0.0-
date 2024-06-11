@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Attachment\AttachmentController;
 use App\Http\Controllers\Api\Auth\AuthenticationController;
+use App\Http\Controllers\Api\Donate\DonateController;
 use App\Http\Controllers\Api\Gateway\GatewayController;
 use App\Http\Controllers\Api\Identity\IdentityController;
 use App\Http\Controllers\Api\Payment\CreditController;
@@ -79,6 +80,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('identity')->group(function () {
         Route::get('/', [IdentityController::class, 'index']);
         Route::patch('/', [IdentityController::class, 'update']);
+    });
+
+    Route::prefix('/donate')->group(function () {
+        Route::get('/paid', [DonateController::class, 'donatePaid']);
+        Route::get('/got', [DonateController::class, 'donateReceived']);
     });
 });
 
