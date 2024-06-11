@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Payment;
+namespace App\Http\Controllers\Api\Transaction;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Wallet\AddCreditRequest;
@@ -13,9 +13,9 @@ class CreditController extends Controller
 
     /**
      * @OA\Post(
-     * path="/api/payment/addcredit",
+     * path="/api/transaction/addcredit",
      * operationId="addCredit",
-     * tags={"Payment"},
+     * tags={"Transaction"},
      * summary="Add credit to profile",
      * security={ {"sanctum": {} }},
      * @OA\RequestBody(

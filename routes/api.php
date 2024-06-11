@@ -5,10 +5,10 @@ use App\Http\Controllers\Api\Auth\AuthenticationController;
 use App\Http\Controllers\Api\Donate\DonateController;
 use App\Http\Controllers\Api\Gateway\GatewayController;
 use App\Http\Controllers\Api\Identity\IdentityController;
-use App\Http\Controllers\Api\Payment\CreditController;
-use App\Http\Controllers\Api\Payment\DonationController;
-use App\Http\Controllers\Api\Payment\SubscribeController;
-use App\Http\Controllers\Api\Payment\VerifyController;
+use App\Http\Controllers\Api\Transaction\CreditController;
+use App\Http\Controllers\Api\Transaction\DonationController;
+use App\Http\Controllers\Api\Transaction\SubscribeController;
+use App\Http\Controllers\Api\Transaction\VerifyController;
 use App\Http\Controllers\Api\Province\ProvinceController;
 use App\Http\Controllers\Api\Streamer\StreamerController;
 use App\Http\Controllers\Api\Wallet\CheckoutController;
@@ -58,7 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     });
 
-    Route::prefix('payment')->group(function () {
+    Route::prefix('transaction')->group(function () {
         Route::post('/donate', [DonationController::class, 'makeDonate']);
         Route::post('/addcredit', [CreditController::class, 'addCredit']);
         Route::post('/buysubscribe', [SubscribeController::class, 'buySubscribe']);
