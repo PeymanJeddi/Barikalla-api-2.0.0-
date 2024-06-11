@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum UserWageTypeEnum: string
+enum GatewayWageTypeEnum: string
 {
     case DEFAULT = 'default';
     case NONE = 'none';
