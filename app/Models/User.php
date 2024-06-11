@@ -91,6 +91,11 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class, 'user_id');
     }
 
+    public function transactionsReceived(): HasMany
+    {
+        return $this->hasMany(Transaction::class, 'streamer_id');
+    }
+
     public function checkoutRequests(): HasMany
     {
         return $this->hasMany(StreamerCheckoutRequest::class, 'user_id');
