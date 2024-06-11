@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('max_donate')->default(100000000);
             $table->boolean('is_donator_pay_wage')->nullable();
             $table->boolean('is_donator_pay_tax')->nullable();
-            $table->boolean('is_pay_wage')->nullable();
+            $table->enum('wage_type', ['default', 'none', 'custom'])->default('default');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
