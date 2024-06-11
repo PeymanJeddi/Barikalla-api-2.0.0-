@@ -32,6 +32,7 @@ class IdentityUpdateRequest extends FormRequest
             'address' => ['nullable', 'max:255'],
             'postalcode' => ['nullable', 'max:10'],
             'fix_phone_number' => ['nullable'],
+            'email' => ['nullable', 'email'],
         ];
     }
 }
