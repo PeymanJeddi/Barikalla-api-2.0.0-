@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\AuthenticationController;
 use App\Http\Controllers\Api\Donate\DonateController;
 use App\Http\Controllers\Api\Gateway\GatewayController;
 use App\Http\Controllers\Api\Identity\IdentityController;
+use App\Http\Controllers\Api\Payment\PaymentController;
 use App\Http\Controllers\Api\Transaction\CreditController;
 use App\Http\Controllers\Api\Transaction\DonationController;
 use App\Http\Controllers\Api\Transaction\SubscribeController;
@@ -92,6 +93,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [ProvinceController::class, 'province']);
         Route::Get('/{kind}', [ProvinceController::class, 'city']);
     }));
+
+    Route::prefix('payment')->group(function () {
+        Route::get('/', [PaymentController::class, 'index']);
+    });
 });
 
 Route::prefix('payment')->group(function () {
