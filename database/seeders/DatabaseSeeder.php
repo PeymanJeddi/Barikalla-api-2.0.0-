@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             PaymentConfigTableSeeder::class,
             WageConfigTableSeeder::class,
             CustomWageTableSeeder::class,
+            ProvinceTableSeeder::class,
+            CityTableSeeder::class,
         ]);
     }
 }

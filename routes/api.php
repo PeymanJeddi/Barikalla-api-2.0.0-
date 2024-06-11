@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Payment\CreditController;
 use App\Http\Controllers\Api\Payment\DonationController;
 use App\Http\Controllers\Api\Payment\SubscribeController;
 use App\Http\Controllers\Api\Payment\VerifyController;
+use App\Http\Controllers\Api\Province\ProvinceController;
 use App\Http\Controllers\Api\Streamer\StreamerController;
 use App\Http\Controllers\Api\Wallet\CheckoutController;
 use App\Http\Controllers\Api\Target\TargetController;
@@ -82,10 +83,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/', [IdentityController::class, 'update']);
     });
 
-    Route::prefix('/donate')->group(function () {
+    Route::prefix('donate')->group(function () {
         Route::get('/paid', [DonateController::class, 'donatePaid']);
         Route::get('/got', [DonateController::class, 'donateReceived']);
     });
+
+    Route::prefix('province')->group((function () {
+        Route::get('/', [ProvinceController::class, 'province']);
+        Route::Get('/{kind}', [ProvinceController::class, 'city']);
+    }));
 });
 
 Route::prefix('payment')->group(function () {

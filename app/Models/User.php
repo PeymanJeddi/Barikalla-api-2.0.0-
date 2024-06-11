@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -37,6 +38,7 @@ class User extends Authenticatable
         'address',
         'postalcode',
         'fix_phone_number',
+        'city_id',
     ];
 
     /**
@@ -124,5 +126,10 @@ class User extends Authenticatable
     public function links(): BelongsToMany
     {
         return $this->belongsToMany(Kind::class, 'link_user', 'user_id', 'link_id')->withPivot('value')->withPivot('alt');
+    }
+
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(Kind::class, 'city_id');
     }
 }

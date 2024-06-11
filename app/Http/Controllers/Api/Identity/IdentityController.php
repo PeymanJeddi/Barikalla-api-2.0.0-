@@ -49,6 +49,7 @@ class IdentityController extends Controller
      *       @OA\Property(property="gender", type="enum", format="string", example="male|female|other"),
      *       @OA\Property(property="birthday", type="string", format="date", example="2000-02-03"),
      *       @OA\Property(property="national_id", type="string", format="string", example="0000000000"),
+     *       @OA\Property(property="city_id", type="integer", format="integer", example="3"),
      *       @OA\Property(property="address", type="string", format="string", example="first streat"),
      *       @OA\Property(property="postalcode", type="string", format="string", example="0000000000"),
      *       @OA\Property(property="fix_phone_number", type="string", format="string", example="00000000"),
@@ -88,5 +89,28 @@ class IdentityController extends Controller
         }
 
         return sendResponse('اطلاعات هویتی با موفقیت به روز رسانی شدند', new IdentityResource($user));
+    }
+
+    /**
+     * @OA\Get(
+     * path="/api/identity/config",
+     * operationId="identityConfig",
+     * tags={"Identity"},
+     * summary="Get provinces and city list",
+     * security={ {"sanctum": {} }},
+     * @OA\Response(
+     *    response=200,
+     *    description="Your request has been successfully completed.",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="success", type="bool", example="true"),
+     *       @OA\Property(property="message", type="string", example="Your request has been successfully completed."),
+     *       @OA\Property(property="data"),
+     *        )
+     *     ),
+     * )
+     */
+    public function config()
+    {
+        
     }
 }
