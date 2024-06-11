@@ -27,6 +27,9 @@ class DatabaseSeeder extends Seeder
             LinkSeeder::class,
             RoleTableSeeder::class,
             UploadTypeTableSeeder::class,
+            PaymentConfigTableSeeder::class,
+            WageConfigTableSeeder::class,
+            CustomWageTableSeeder::class,
         ]);
     }
 }
