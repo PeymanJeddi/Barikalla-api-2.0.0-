@@ -72,7 +72,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('streamer')->group(function() {
-        Route::get('/config', [GatewayController::class, 'config']);
+        Route::get('/gateway/config', [GatewayController::class, 'config']);
         Route::patch('/gateway', [GatewayController::class, 'update']);
         Route::get('/gateway', [GatewayController::class, 'index']);
     });
