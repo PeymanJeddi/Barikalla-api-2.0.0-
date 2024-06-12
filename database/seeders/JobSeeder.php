@@ -15,6 +15,9 @@ class JobSeeder extends Seeder
     {
         KindService::Seeder('عنوان شغلی', 'job', 'عنوان', '', [
             ['key' => 'job-streamer', 'value_1' => 'استریمر'],
+            ['key' => 'job-streamer1', 'value_1' => 'است3ریمر'],
+            ['key' => 'job-streamer2', 'value_1' => 'استری4مر'],
+            ['key' => 'job-streamer3', 'value_1' => 'است2ریمر'],
         ]);
     }
 }
