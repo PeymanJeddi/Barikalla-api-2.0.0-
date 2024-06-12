@@ -55,7 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/', [WalletController::class, 'update']);
         Route::get('/checkoutrequest', [CheckoutController::class, 'index']);
         Route::post('/checkoutrequest', [CheckoutController::class, 'store']);
-
+        Route::get('/log', [WalletController::class, 'log']);
 
     });
 

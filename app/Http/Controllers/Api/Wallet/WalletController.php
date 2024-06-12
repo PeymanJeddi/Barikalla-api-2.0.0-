@@ -73,4 +73,28 @@ class WalletController extends Controller
  
         return sendResponse('Wallet updated', new WalletResource($user->wallet));
     }
+
+    /**
+     * @OA\Get(
+     * path="/api/wallet/log",
+     * operationId="walletLog",
+     * tags={"Wallet"},
+     * summary="Get wallet log",
+     * security={ {"sanctum": {} }},
+     * @OA\Response(
+     *    response=200,
+     *    description="Your request has been successfully completed.",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="success", type="bool", example="true"),
+     *       @OA\Property(property="message", type="string", example="Your request has been successfully completed."),
+     *       @OA\Property(property="data"),
+     *        )
+     *     ),
+     * )
+     */
+    public function log()
+    {
+        $user = auth()->user();
+        return $user->wallet->audits()->orderBy('id', 'desc')->get();
+    }
 }
