@@ -18,7 +18,7 @@ class PaymentService extends Service
                     "CorporationPin" => config('app.payment_corporation_pin'),
                     "Amount" => $amount * 10,
                     "OrderId" => $orderId,
-                    "CallBackUrl" => "http://localhost:8000/api/payment/verify",
+                    "CallBackUrl" => config('app.payment_callback_url'),
                     "AdditionalData" => "test",
                     "Originator" => $user->mobile,
                 ];
