@@ -17,14 +17,26 @@ class VerifyController extends Controller
     {
         if ($request->status == 0) {
             $transaction = Transaction::where('order_id', $request->OrderId)->first();
+
+            if ($transaction->is_paid) {
+                return sendError('تراکنش قبلا تایید شده است', '', 403);
+            }
+
             $payment = PaymentService::verifyPayment($request->Token, $transaction);
             
             if ($transaction->type == 'donate') {
                 $streamer = $transaction->streamer;
                 $amountToBeCharge = $this->calculateAmount($streamer, $transaction);
                 WalletService::chargeWallet($streamer, $amountToBeCharge);
+                $payment->update([
+                    'user_credit_after_payment' => WalletService::getUserCredit($transaction->user),
+                    'streamer_credit_after_payment' => WalletService::getUserCredit($transaction->streamer),
+                ]);
             } else if ($transaction->type == 'charge') {
                 WalletService::chargeWallet($transaction->user, $transaction->raw_amount);
+                $payment->update([
+                    'user_credit_after_payment' => WalletService::getUserCredit($transaction->user),
+                ]);
             } else if ($transaction->type == 'subscription') {
                 $vipPackagePrice = Kind::where('key', 'vip_package_price')->first()->value_2;
                 $months = $transaction->amount / $vipPackagePrice;

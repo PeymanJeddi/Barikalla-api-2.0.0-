@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('token');
             $table->string('card_number')->nullable();
             $table->string('code');
+            $table->bigInteger('user_credit_after_payment')->nullable();
+            $table->bigInteger('streamer_credit_after_payment')->nullable();
             $table->timestamps();
 
             $table->foreign('transaction_id')->references('id')->on('transactions')->cascadeOnDelete();
