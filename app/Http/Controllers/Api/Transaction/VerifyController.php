@@ -10,6 +10,7 @@ use App\Services\DonateAmountService;
 use App\Services\PaymentService;
 use App\Services\WalletService;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class VerifyController extends Controller
 {
@@ -62,4 +63,41 @@ class VerifyController extends Controller
 
         return $finalAmount;
     }
+
+
+    public function sse()
+    {
+                // Set the appropriate headers for SSE
+                $response = new StreamedResponse(function () {
+                    while (true) {
+                        // Your server-side logic to get data
+                        $data = json_encode([
+                            'last_donates' => [
+                                'id' => 1,
+                                'title' => 'test'
+                            ],
+                            'real_time_donates' => [
+                                'id' => 4,
+                                'title' => 'test',
+                            ]
+                        ]);
+        
+                        echo "data: $data\n\n";
+        
+                        // Flush the output buffer
+                        ob_flush();
+                        flush();
+        
+                        // Delay for 1 second
+                        sleep(1);
+                    }
+                });
+        
+                $response->headers->set('Content-Type', 'text/event-stream');
+                $response->headers->set('Cache-Control', 'no-cache');
+                $response->headers->set('Connection', 'keep-alive');
+        
+                return $response;
+    }
+
 }

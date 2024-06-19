@@ -102,3 +102,5 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::prefix('transaction')->group(function () {
     Route::post('/verify', [VerifyController::class, 'verifyTransaction']);
 });
+
+Route::get('/sse', [VerifyController::class, 'sse']);
