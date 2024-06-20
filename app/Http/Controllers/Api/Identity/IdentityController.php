@@ -53,7 +53,6 @@ class IdentityController extends Controller
      *       @OA\Property(property="address", type="string", format="string", example="first streat"),
      *       @OA\Property(property="postalcode", type="string", format="string", example="0000000000"),
      *       @OA\Property(property="fix_phone_number", type="string", format="string", example="00000000"),
-     *       @OA\Property(property="email", type="string", format="email", example="test@test.com"),
      *    ),
      * ),
      * @OA\Response(

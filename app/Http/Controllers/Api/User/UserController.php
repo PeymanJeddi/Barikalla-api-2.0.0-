@@ -56,6 +56,7 @@ class UserController extends Controller
      *       @OA\Property(property="nickname", type="string", format="string", example="bigezmog"),
      *       @OA\Property(property="username", type="string", format="string", example="4example"),
      *       @OA\Property(property="referral_username", type="string", format="string", example="4example"),
+     *       @OA\Property(property="email", type="string", format="email", example="test@test.com"),
      *    ),
      * ),
      * @OA\Response(

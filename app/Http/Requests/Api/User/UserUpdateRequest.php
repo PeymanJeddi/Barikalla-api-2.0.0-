@@ -26,6 +26,7 @@ class UserUpdateRequest extends FormRequest
             'nickname' => ['required', 'max:255'],
             'username' => ['required', 'max:255', "unique:users,username,$userId"],
             'referral_username' => ['nullable', 'exists:users,username'],
+            'email' => ['nullable', 'email'],
         ];
     }
 }
