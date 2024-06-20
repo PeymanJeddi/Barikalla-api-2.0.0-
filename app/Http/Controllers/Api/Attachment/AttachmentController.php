@@ -61,7 +61,7 @@ class AttachmentController extends Controller
                     }
                     break;
                 case 'birth-certificate':
-                    if ($user->status != 'verified') {
+                    if ($user->status != 'verified' && $user->status != 'pending') {
                         if ($user->birthCertificate?->count() != 0) {
                             $this->attachmentService->deleteAttachment($user->birthCertificate);
                         }
@@ -70,7 +70,7 @@ class AttachmentController extends Controller
                     }
                     break;
                 case 'national-card':
-                    if ($user->status != 'verified') {
+                    if ($user->status != 'verified' && $user->status != 'pending') {
                         if ($user->birthCertificate?->count() != 0) {
                             $this->attachmentService->deleteAttachment($user->nationalCard);
                         }
