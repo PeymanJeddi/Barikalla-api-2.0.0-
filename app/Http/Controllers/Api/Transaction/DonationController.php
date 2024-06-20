@@ -47,24 +47,28 @@ class DonationController extends Controller
     {
         $user = auth()->user();
         $streamer = $this->getStreamer($request->streamer_username);
-        $finalAmount = $this->calculateAmount($streamer, $request->amount);
-        $transaction = Transaction::create([
-            'user_id' => $user->id,
-            'streamer_id' => $streamer->id,
-            'amount' => $finalAmount,
-            'raw_amount' => $request->amount,
-            'fullname' => $request->fullname,
-            'description' => $request->description,
-            'mobile' => $user->mobile,
-            'type' => 'donate',
-        ]);
-
-        $paymentUrl = PaymentService::makePayment($transaction, $user, $finalAmount);
-
-
-        return sendResponse('transaction created', [
-            'payment_url' => $paymentUrl,
-        ]);
+        if ($streamer->gateway->is_payment_active) {
+            $finalAmount = $this->calculateAmount($streamer, $request->amount);
+            $transaction = Transaction::create([
+                'user_id' => $user->id,
+                'streamer_id' => $streamer->id,
+                'amount' => $finalAmount,
+                'raw_amount' => $request->amount,
+                'fullname' => $request->fullname,
+                'description' => $request->description,
+                'mobile' => $user->mobile,
+                'type' => 'donate',
+            ]);
+    
+            $paymentUrl = PaymentService::makePayment($transaction, $user, $finalAmount);
+    
+    
+            return sendResponse('transaction created', [
+                'payment_url' => $paymentUrl,
+            ]);
+        } else {
+            return sendError('دونیت غیر فعال می‌باشد');
+        }
     }
 
     private function getStreamer($username): User
