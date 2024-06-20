@@ -25,6 +25,7 @@ class IdentityResource extends JsonResource
             ->getTimestamp() ),
             'national_id' => $this->national_id,
             'city' => new KindResource($this->city),
+            'province' => new KindResource($this->city?->parent),
             'address' => $this->address,
             'email' => $this->email,
             'mobile' => $this->mobile,
