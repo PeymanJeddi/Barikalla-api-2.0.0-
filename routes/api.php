@@ -86,7 +86,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('donate')->group(function () {
         Route::get('/paid', [DonateController::class, 'donatePaid']);
-        Route::get('/got', [DonateController::class, 'donateReceived']);
+        Route::get('/received', [DonateController::class, 'donateReceived']);
     });
 
     Route::prefix('province')->group((function () {

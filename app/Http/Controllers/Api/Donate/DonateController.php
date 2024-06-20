@@ -34,7 +34,7 @@ class DonateController extends Controller
 
     /**
      * @OA\Get(
-     * path="/api/donate/got",
+     * path="/api/donate/received",
      * operationId="donateReceived",
      * tags={"Donate"},
      * summary="Get donates I received",
