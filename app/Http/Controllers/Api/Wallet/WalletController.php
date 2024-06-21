@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Wallet;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Wallet\WalletUpdateRequest;
+use App\Http\Resources\Wallet\WalletAuditResource;
 use App\Http\Resources\Wallet\WalletResource;
 use Illuminate\Http\Request;
 
@@ -95,6 +96,10 @@ class WalletController extends Controller
     public function log()
     {
         $user = auth()->user();
-        return $user->wallet->audits()->orderBy('id', 'desc')->get();
+        $walletAudit = $user->wallet->audits()->orderBy('id', 'desc')->paginate(10);
+        return sendResponse('تغییرات والت', [
+            'wallet_audit' => WalletAuditResource::collection($walletAudit),
+            'pagination' => paginateResponse($walletAudit),
+        ]);
     }
 }
