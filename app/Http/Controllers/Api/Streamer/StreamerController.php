@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Streamer;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Gateway\GatewayResource;
+use App\Http\Resources\Steamer\StreamerResource;
 use App\Models\User;
 
 class StreamerController extends Controller
@@ -14,7 +14,6 @@ class StreamerController extends Controller
      * operationId="streamerShow",
      * tags={"Streamer"},
      * summary="Get streamer gateway into",
-     * security={ {"sanctum": {} }},
      * @OA\Parameter(name="username",in="path",description="4example",required=true),
      * @OA\Response(
      *    response=200,
@@ -29,7 +28,6 @@ class StreamerController extends Controller
      */
     public function show(User $user)
     {
-        $user = auth()->user();
-        return sendResponse('اطلاعات درگاه', new GatewayResource($user->gateway));
+        return sendResponse('اطلاعات استریمر', new StreamerResource($user));
     }
 }

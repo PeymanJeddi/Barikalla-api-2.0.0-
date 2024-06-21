@@ -77,7 +77,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/gateway', [GatewayController::class, 'index']);
     });
 
-    Route::get('/gateway/{user:username}', [StreamerController::class, 'show']);
     
     Route::prefix('identity')->group(function () {
         Route::get('/', [IdentityController::class, 'index']);
@@ -102,3 +101,4 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::prefix('transaction')->group(function () {
     Route::post('/verify', [VerifyController::class, 'verifyTransaction']);
 });
+Route::get('/gateway/{user:username}', [StreamerController::class, 'show']);
