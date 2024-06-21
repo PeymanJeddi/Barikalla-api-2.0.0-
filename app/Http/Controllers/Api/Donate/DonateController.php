@@ -28,8 +28,11 @@ class DonateController extends Controller
     public function DonatePaid()
     {
         $user = auth()->user();
-        $donates = $user->transactions()->where('is_paid', 1)->where('type', 'donate')->get();
-        return sendResponse('Donate that I paid', DonateResource::collection($donates));
+        $donates = $user->transactions()->where('is_paid', 1)->where('type', 'donate')->paginate(10);
+        return sendResponse('Donate that I paid', [
+            'donates' => DonateResource::collection($donates),
+            'pagination' => paginateResponse($donates),
+        ]);
     }
 
     /**
@@ -53,7 +56,10 @@ class DonateController extends Controller
     public function DonateReceived()
     {
         $user = auth()->user();
-        $donates = $user->transactionsReceived()->where('is_paid', 1)->where('type', 'donate')->get();
-        return sendResponse('Donate that I received', DonateResource::collection($donates));
+        $donates = $user->transactionsReceived()->where('is_paid', 1)->where('type', 'donate')->paginate(10);
+        return sendResponse('Donate that I received', [
+            'donates' => DonateResource::collection($donates),
+            'pagination' => paginateResponse($donates),
+        ]);
     }
 }
