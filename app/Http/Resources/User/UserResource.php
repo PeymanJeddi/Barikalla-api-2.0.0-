@@ -28,6 +28,7 @@ class UserResource extends JsonResource
             ->getTimestamp(),
             'description' => $this->description,
             'wallet_credit' => $this->wallet->credit,
+            'uuid' => $this->uuid,
             'avatar' => new AttachmentResource($this->avatar),
         ];
     }
