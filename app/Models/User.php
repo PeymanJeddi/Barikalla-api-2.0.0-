@@ -93,6 +93,11 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class, 'user_id');
     }
 
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Transaction::class, 'user_id')->whereHas('payment')->with('payment');
+    }
+
     public function transactionsReceived(): HasMany
     {
         return $this->hasMany(Transaction::class, 'streamer_id');
