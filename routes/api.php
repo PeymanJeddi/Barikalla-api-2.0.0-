@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\AuthenticationController;
 use App\Http\Controllers\Api\Donate\DonateController;
 use App\Http\Controllers\Api\Gateway\GatewayController;
 use App\Http\Controllers\Api\Identity\IdentityController;
+use App\Http\Controllers\Api\Overlay\OverlayController;
 use App\Http\Controllers\Api\Payment\PaymentController;
 use App\Http\Controllers\Api\Transaction\CreditController;
 use App\Http\Controllers\Api\Transaction\DonationController;
@@ -102,3 +103,4 @@ Route::prefix('transaction')->group(function () {
     Route::post('/verify', [VerifyController::class, 'verifyTransaction']);
 });
 Route::get('/gateway/{user:username}', [StreamerController::class, 'show']);
+Route::get('/overlay', [OverlayController::class, 'donate']);
