@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -39,6 +40,7 @@ class User extends Authenticatable
         'postalcode',
         'fix_phone_number',
         'city_id',
+        'uuid',
     ];
 
     /**
@@ -62,6 +64,9 @@ class User extends Authenticatable
             $user->wallet()->create();
             $user->gateway()->create();
             $user->assignRole('streamer');
+            $user->update([
+                'uuid' => self::generateUUID()
+            ]);
         });
     }
 
@@ -76,6 +81,14 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    private static function generateUUID(): string
+    {
+        do {
+            $uuid = Str::random(50);
+        } while (User::where('uuid', $uuid)->exists());
+        return $uuid;
     }
 
     public function wallet(): HasOne
