@@ -29,6 +29,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->boolean('is_active')->default(0);
+            $table->string('uuid')->nullable()->unique();
             $table->string('status')->comment('incomplete|pending|rejected|verified')->default('incomplete');
             $table->softDeletes();
             $table->rememberToken();

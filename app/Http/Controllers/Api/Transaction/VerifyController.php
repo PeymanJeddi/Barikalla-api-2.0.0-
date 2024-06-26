@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Transaction;
 
+use App\Events\DonateProcced;
 use App\Http\Controllers\Controller;
 use App\Models\Kind;
 use App\Models\Transaction;
@@ -32,6 +33,11 @@ class VerifyController extends Controller
                     'user_credit_after_payment' => WalletService::getUserCredit($transaction->user),
                     'streamer_credit_after_payment' => WalletService::getUserCredit($transaction->streamer),
                 ]);
+                event(new DonateProcced([
+                    'amount' => $transaction->amount,
+                    'fullname' => $transaction->fullname,
+                    'description' => $transaction->description,
+                ], "donate-$streamer->username"));
             } else if ($transaction->type == 'charge') {
                 WalletService::chargeWallet($transaction->user, $transaction->raw_amount);
                 $payment->update([
