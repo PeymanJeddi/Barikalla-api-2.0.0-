@@ -11,6 +11,7 @@ use App\Services\DonateAmountService;
 use App\Services\PaymentService;
 use App\Services\WalletService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class VerifyController extends Controller
 {
@@ -49,9 +50,15 @@ class VerifyController extends Controller
                 $transaction->user->assignRole('vip');
             }
 
-            dd($payment);
-        }        
-        return 'error';
+            return Http::post(config('app.payment_front_callback_url'), [
+                'success' => true, 
+                'amount' => $transaction->amount,
+                'order_id' => $transaction->order_id,
+            ]);
+        }    
+        return Http::post(config('app.payment_front_callback_url'), [
+            'success' => false, 
+        ]);
     }
 
     private function calculateAmount(User $streamer, Transaction $transaction): int
