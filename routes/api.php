@@ -103,4 +103,7 @@ Route::prefix('transaction')->group(function () {
     Route::post('/verify', [VerifyController::class, 'verifyTransaction']);
 });
 Route::get('/gateway/{user:username}', [StreamerController::class, 'show']);
-Route::get('/overlay', [OverlayController::class, 'donate']);
+Route::prefix('overlay')->group(function () {
+    Route::get('/donate', [OverlayController::class, 'donate']);
+    Route::get('/donates', [OverlayController::class, 'donates']);
+});
