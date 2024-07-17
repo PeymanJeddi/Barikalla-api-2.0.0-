@@ -105,5 +105,6 @@ Route::prefix('transaction')->group(function () {
 Route::get('/gateway/{user:username}', [StreamerController::class, 'show']);
 Route::prefix('overlay')->group(function () {
     Route::get('/donate', [OverlayController::class, 'donate']);
+    Route::patch('/donate/{transaction}', [OverlayController::class, 'markAsWatchedDonate']);
     Route::get('/donates', [OverlayController::class, 'donates']);
 });

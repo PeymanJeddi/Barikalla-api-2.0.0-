@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->boolean('is_paid')->default(0);
             $table->string('type')->comment('donate|charge|subscription');
+            $table->timestamp('watched_at')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
