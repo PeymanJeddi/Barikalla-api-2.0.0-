@@ -9,6 +9,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Services\DonateAmountService;
 use App\Services\PaymentService;
+use App\Services\WalletService;
 
 class DonationController extends Controller
 {
@@ -29,6 +30,7 @@ class DonationController extends Controller
      *       @OA\Property(property="amount", type="integer", format="tooman", example="1000"),
      *       @OA\Property(property="phone_number", type="string", format="string", example="09000000000"),
      *       @OA\Property(property="fullname", type="string", format="string", example="my full name"),
+     *       @OA\Property(property="sandbox", type="boolean", format="boolean", example="0"),
      *       @OA\Property(property="description", type="text", format="text", example="this is test description."),
      *    ),
      * ),
@@ -47,6 +49,11 @@ class DonationController extends Controller
     {
         $user = auth()->user();
         $streamer = $this->getStreamer($request->streamer_username);
+
+        if ($request->sandbox && $user->hasRole('developer')) {
+            return $this->generateFakeDonate($streamer, $user, $request->amount, $request->fullname);
+        }
+
         if ($streamer->gateway->is_payment_active) {
             $finalAmount = $this->calculateAmount($streamer, $request->amount);
             $transaction = Transaction::create([
@@ -76,7 +83,7 @@ class DonationController extends Controller
         return User::where('username', $username)->first();
     }
 
-    private  function calculateAmount(User $streamer, int $amount): int
+    private  function calculateAmount(User $streamer, int $amount): int // TODO: move this function into service
     {
         $finalAmount = $amount;
         if ($streamer->gateway->is_donator_pay_wage || $streamer->gateway->is_donator_pay_wage == '') {
@@ -88,6 +95,33 @@ class DonationController extends Controller
         }
 
         return $finalAmount;
+    }
+
+    private function generateFakeDonate(User $streamer, User $user, int $amount, string $fullname) 
+    {
+        $finalAmount = $this->calculateAmount($streamer, $amount);
+        $transaction = Transaction::create([
+            'user_id' => $user->id,
+            'streamer_id' => $streamer->id,
+            'amount' => $finalAmount,
+            'raw_amount' => $amount,
+            'fullname' => $fullname,
+            'description' => 'sandbox',
+            'mobile' => $user->mobile,
+            'type' => 'donate',
+            'is_paid' => 1,
+        ]);
+
+
+        $amountToBeCharge = $this->calculateAmount($streamer, $amount);
+        WalletService::chargeWallet($streamer, $amountToBeCharge);
+        $transaction->payment()->create([
+            'token' => 'sandbox',
+            'code' => 'sandbox',
+            'user_credit_after_payment' => WalletService::getUserCredit($transaction->user),
+            'streamer_credit_after_payment' => WalletService::getUserCredit($transaction->streamer),
+        ]);
+        return sendResponse('دونیت با موفقیت ایجاد شد', '');
     }
 
 }
