@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Overlay;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Donate\DonateResource;
-use App\Models\Transaction;
+wuse App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -36,7 +36,7 @@ class OverlayController extends Controller
         if (!$streamer) {
             abort(404, 'Invalid key');
         }
-        $transaction = $streamer->transactions()->whereHas('payment')->where('watched_at', null)->limit(1)->first();
+        $transaction = $streamer->transactionsReceived()->whereHas('payment')->where('watched_at', null)->limit(1)->first();
         if ($transaction) {
             return sendResponse('new donate', [
                 'id' => $transaction->id,
