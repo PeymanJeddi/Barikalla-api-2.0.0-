@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('streamer_id')->nullable();
+            $table->unsignedBigInteger('target_id')->nullable();
             $table->bigInteger('amount')->nullable();
             $table->bigInteger('raw_amount')->nullable();
             $table->string('fullname')->nullable();
@@ -27,6 +28,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('streamer_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('target_id')->references('id')->on('targets')->nullOnDelete();
         });
     }
 

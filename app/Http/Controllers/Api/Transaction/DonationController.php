@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Transaction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Donation\DonationStoreController;
 use App\Models\Kind;
+use App\Models\Target;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Services\DonateAmountService;
@@ -31,6 +32,7 @@ class DonationController extends Controller
      *       @OA\Property(property="phone_number", type="string", format="string", example="09000000000"),
      *       @OA\Property(property="fullname", type="string", format="string", example="my full name"),
      *       @OA\Property(property="sandbox", type="boolean", format="boolean", example="0"),
+     *       @OA\Property(property="target_id", type="integer", format="integer", example="64"),
      *       @OA\Property(property="description", type="text", format="text", example="this is test description."),
      *    ),
      * ),
@@ -54,11 +56,20 @@ class DonationController extends Controller
             return $this->generateFakeDonate($streamer, $user, $request->amount, $request->fullname);
         }
 
+        $target = null;
+        if ($request->has('target_id')) {
+            $target = Target::find($request->target_id);
+            if ($target->user_id != $streamer->id ) {
+                return sendError('تارگت انتخاب شده مربوط به استریمر دیگری نیست', '', 403);
+            }
+        }
+    
         if ($streamer->gateway->is_payment_active) {
             $finalAmount = $this->calculateAmount($streamer, $request->amount);
             $transaction = Transaction::create([
                 'user_id' => $user->id,
                 'streamer_id' => $streamer->id,
+                'target_id' => $target?->id,
                 'amount' => $finalAmount,
                 'raw_amount' => $request->amount,
                 'fullname' => $request->fullname,

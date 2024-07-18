@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api\Transaction;
 use App\Events\DonateProcced;
 use App\Http\Controllers\Controller;
 use App\Models\Kind;
+use App\Models\Target;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Services\DonateAmountService;
 use App\Services\PaymentService;
+use App\Services\TargetService;
 use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -30,15 +32,16 @@ class VerifyController extends Controller
                 $streamer = $transaction->streamer;
                 $amountToBeCharge = $this->calculateAmount($streamer, $transaction);
                 WalletService::chargeWallet($streamer, $amountToBeCharge);
+                
+                if ($transaction->target_id != null) {
+                    $target = Target::find($transaction->target_id);
+                    TargetService::chargetTarget($target, $amountToBeCharge);
+                }
+
                 $payment->update([
                     'user_credit_after_payment' => WalletService::getUserCredit($transaction->user),
                     'streamer_credit_after_payment' => WalletService::getUserCredit($transaction->streamer),
                 ]);
-                event(new DonateProcced([
-                    'amount' => $transaction->amount,
-                    'fullname' => $transaction->fullname,
-                    'description' => $transaction->description,
-                ], "donate-$streamer->username"));
             } else if ($transaction->type == 'charge') {
                 WalletService::chargeWallet($transaction->user, $transaction->raw_amount);
                 $payment->update([
