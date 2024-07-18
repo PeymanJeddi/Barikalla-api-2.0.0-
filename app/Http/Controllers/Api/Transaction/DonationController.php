@@ -62,6 +62,10 @@ class DonationController extends Controller
             if ($target->user_id != $streamer->id ) {
                 return sendError('تارگت انتخاب شده مربوط به استریمر دیگری نیست', '', 403);
             }
+
+            if (!$target->is_active) {
+                return sendError('تارگت غیر فعال می‌باشد');
+            }
         }
     
         if ($streamer->gateway->is_payment_active) {

@@ -29,7 +29,7 @@ class StreamerResource extends JsonResource
                 'is_donator_pay_wage' => $this->gateway->is_donator_pay_wage,
                 'is_donator_pay_tax' => $this->gateway->is_donator_pay_tax,
             ],
-            'targets' => TargetPublicResource::collection($this->targets),
+            'targets' => TargetPublicResource::collection($this->targets->where('is_active', 1)),
             'links' => LinkResource::collection($this->links),
         ];
     }
