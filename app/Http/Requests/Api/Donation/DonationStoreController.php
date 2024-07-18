@@ -27,7 +27,8 @@ class DonationStoreController extends FormRequest
             'phone_number' => ['required', 'regex:/(0)([ ]|-|[()]){0,2}9[0-9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/', 'digits:11'],
             'fullname' => ['required', 'max:255'],
             'description' => ['nullable', 'max:3000'],
-            'sandbox' => ['nullable', 'boolean']
+            'sandbox' => ['nullable', 'boolean'],
+            'target_id' => ['nullable', 'exists:targets,id'],
         ];
     }
 
