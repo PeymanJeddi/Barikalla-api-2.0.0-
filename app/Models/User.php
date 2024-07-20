@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Utility\ModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -18,7 +20,7 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens, SoftDeletes, HasRoles;
+    use HasFactory, Notifiable, HasApiTokens, SoftDeletes, HasRoles, ModelTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -40,7 +42,6 @@ class User extends Authenticatable
         'postalcode',
         'fix_phone_number',
         'city_id',
-        'uuid',
     ];
 
     /**
@@ -64,9 +65,8 @@ class User extends Authenticatable
             $user->wallet()->create();
             $user->gateway()->create();
             $user->assignRole('streamer');
-            $user->update([
-                'uuid' => self::generateUUID()
-            ]);
+            $user->uuid = self::generateUUID();
+            $user->save();
         });
     }
 
