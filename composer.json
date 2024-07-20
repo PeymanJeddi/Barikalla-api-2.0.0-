@@ -13,6 +13,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/telescope": "^5.0",
         "laravel/tinker": "^2.9",
+        "morilog/jalali": "3.*",
         "owen-it/laravel-auditing": "^13.6",
         "spatie/laravel-permission": "^6.7",
         "yajra/laravel-datatables": "^11.0"
