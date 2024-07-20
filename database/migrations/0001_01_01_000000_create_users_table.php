@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
+            $table->boolean('is_admin')->default(0);
             $table->string('username')->nullable()->unique();
             $table->string('nickname')->nullable();
             $table->string('referral_username')->nullable();
