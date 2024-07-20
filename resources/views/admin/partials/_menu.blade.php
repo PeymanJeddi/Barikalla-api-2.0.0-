@@ -66,9 +66,22 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item {{ isMenuActive(['admin.users.index', 'admin.users.create', 'admin.users.edit'], 'active open') }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bxs-user"></i>
+                <div>کاربران</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ isMenuActive('admin.users.index', 'active') }}">
+                    <a href="{{ route('admin.users.index') }}" class="menu-link">
+                        <div>لیست</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-item">
             <a href="{{ route('logout') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-exit"></i>
+                <i class="menu-icon tf-icons bx bxs-exit"></i>
                 <div>خروج</div>
             </a>
         </li>
