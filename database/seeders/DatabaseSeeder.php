@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             CustomWageTableSeeder::class,
             ProvinceTableSeeder::class,
             CityTableSeeder::class,
+            AdminSeeder::class,
         ]);
     }
 }
