@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 if (!function_exists('isEnglishNumbers')) {
     function toEnglishNumbers(String $string): String
     {
@@ -52,5 +54,15 @@ if (!function_exists('correctPhoneNumber')) {
             $phoneNumber = '0' . $phoneNumber;
         }
         return $phoneNumber;
+    }
+}
+
+if (!function_exists('isMenuActive')) {
+    function isMenuActive($routeName, $activeClassName = 'active')
+    {
+        if (is_array($routeName)) {
+            return in_array(Route::currentRouteName(), $routeName) ? $activeClassName : '';
+        }
+        return Route::currentRouteName() == $routeName ? $activeClassName : '';
     }
 }
