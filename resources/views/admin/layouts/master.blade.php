@@ -30,8 +30,7 @@
     <link rel="stylesheet" href="/assets/vendor/libs/typeahead-js/typeahead.css">
     <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="/assets/vendor/libs/sweetalert2/sweetalert2.css">
-
-    
+    <link rel="stylesheet" href="/assets/vendor/libs/toastr/toastr.css">
     @stack('links')
 
     <!-- Page CSS -->
@@ -63,6 +62,20 @@
                 <!-- / Navbar -->
 
                 <!-- Content wrapper -->
+
+                {{-- Toast notification --}}
+                @session('toast')
+                    <div class="bs-toast toast toast-ex animate__animated my-2 fade animate__fade hide" role="alert"
+                        aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+                        <div class="toast-header bg-{{ session('toast')['status'] ?? 'info' }} ">
+                            <div class="me-auto fw-semibold">{{ session('toast')['title'] ?? 'پیام' }}</div>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">{{ session('toast')['message'] }}</div>
+                    </div>
+                @endsession
+                {{-- / Toast notification --}}
+
                 @yield('content')
                 <!-- Content wrapper -->
             </div>
@@ -106,7 +119,20 @@
     <!-- Custom JS -->
     <script src="/assets/js/custom/app-backend.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/assets/vendor/libs/toastr/toastr.js"></script>
+    <script>
+        const toastAnimationExample = document.querySelector('.toast-ex'),
+            toastAnimationHeaderExample = document.querySelector('.toast-ex .toast-header'),
+            toastPlacementExample = document.querySelector('.toast-placement-ex'),
+            toastPlacementHeaderExample = document.querySelector('.toast-placement-ex .toast-header'),
+            toastAnimationBtn = document.querySelector('#showToastAnimation'),
+            toastPlacementBtn = document.querySelector('#showToastPlacement');
+        selectedAnimation = "animate__fade";
 
+        toastAnimationExample.classList.add(selectedAnimation);
+        toastAnimation = new bootstrap.Toast(toastAnimationExample);
+        toastAnimation.show();
+    </script>
     @stack('scripts')
     {{-- @include('sweetalert::alert') --}}
 
