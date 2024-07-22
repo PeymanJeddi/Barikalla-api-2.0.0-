@@ -30,7 +30,7 @@ class VerifyController extends Controller
             
             if ($transaction->type == 'donate') {
                 $streamer = $transaction->streamer;
-                $amountToBeCharge = $this->calculateAmount($streamer, $transaction);
+                $amountToBeCharge = DonateAmountService::calculateAmount($streamer, $transaction);
                 WalletService::chargeWallet($streamer, $amountToBeCharge);
                 
                 if ($transaction->target_id != null) {
@@ -64,18 +64,4 @@ class VerifyController extends Controller
         ]);
     }
 
-    private function calculateAmount(User $streamer, Transaction $transaction): int
-    {
-        $amount = $transaction->raw_amount;
-        $finalAmount = $amount;
-        if (!$streamer->gateway->is_donator_pay_wage && $streamer->gateway->is_donator_pay_wage != '') {
-            $finalAmount -= DonateAmountService::calculateWage($streamer, $amount);
-        }
-
-        if (!$streamer->gateway->is_donator_pay_tax && $streamer->gateway->is_donator_pay_tax != '') {
-            $finalAmount -= DonateAmountService::calculateTax($amount);
-        }
-
-        return $finalAmount;
-    }
 }
