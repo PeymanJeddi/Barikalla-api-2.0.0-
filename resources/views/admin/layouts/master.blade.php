@@ -117,7 +117,7 @@
     <script src="/assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
 
     <!-- Custom JS -->
-    <script src="/assets/js/custom/app-backend.js"></script>
+    <script src="/assets/custom/js/app-backend.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/assets/vendor/libs/toastr/toastr.js"></script>
     <script>

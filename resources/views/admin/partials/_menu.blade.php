@@ -46,6 +46,19 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item {{ isMenuActive(['admin.kindcategory.index', 'admin.kindcategory.edit', 'admin.kindcategory.create', 'admin.kindcategory.kind.index', 'admin.kindcategory.kind.create', 'admin.kindcategory.kind.edit'], 'active open') }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bxs-user"></i>
+                <div>ثوابت</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ isMenuActive('admin.kindcateogyr.index', 'active') }}">
+                    <a href="{{ route('admin.kindcategory.index') }}" class="menu-link">
+                        <div>لیست</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-item">
             <a href="{{ route('logout') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-exit"></i>
