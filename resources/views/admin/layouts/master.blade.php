@@ -12,7 +12,7 @@
     <meta name="description" content="">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 
     <!-- Icons -->
     <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css">
