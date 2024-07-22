@@ -128,7 +128,7 @@ class DonationController extends Controller
         ]);
 
 
-        $amountToBeCharge = $this->calculateAmount($streamer, $amount);
+        $amountToBeCharge = DonateAmountService::calculateAmount($streamer, $transaction);
         WalletService::chargeWallet($streamer, $amountToBeCharge);
         $transaction->payment()->create([
             'token' => 'sandbox',
