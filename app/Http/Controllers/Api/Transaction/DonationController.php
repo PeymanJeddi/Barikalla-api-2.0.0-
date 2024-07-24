@@ -10,6 +10,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Services\DonateAmountService;
 use App\Services\PaymentService;
+use App\Services\TargetService;
 use App\Services\WalletService;
 
 class DonationController extends Controller
@@ -53,7 +54,7 @@ class DonationController extends Controller
         $streamer = $this->getStreamer($request->streamer_username);
 
         if ($request->sandbox && $user->hasRole('developer')) {
-            return $this->generateFakeDonate($streamer, $user, $request->amount, $request->fullname);
+            return $this->generateFakeDonate($streamer, $user, $request->amount, $request->fullname, $request->target_id);
         }
 
         $target = null;
@@ -112,12 +113,19 @@ class DonationController extends Controller
         return $finalAmount;
     }
 
-    private function generateFakeDonate(User $streamer, User $user, int $amount, string $fullname) 
+    private function generateFakeDonate(User $streamer, User $user, int $amount, string $fullname, int $target_id = null) 
     {
+        if ($target_id) {
+            $target = Target::find($target_id);
+            if ($target->user_id != $streamer->id) {
+                return sendError('عدم دسترسی', '', 403);
+            }
+        }
         $finalAmount = $this->calculateAmount($streamer, $amount);
         $transaction = Transaction::create([
             'user_id' => $user->id,
             'streamer_id' => $streamer->id,
+            'target_id' => $target_id,
             'amount' => $finalAmount,
             'raw_amount' => $amount,
             'fullname' => $fullname,
@@ -129,6 +137,9 @@ class DonationController extends Controller
 
 
         $amountToBeCharge = DonateAmountService::calculateAmount($streamer, $transaction);
+        if (@$target) {
+            TargetService::chargetTarget($target, $amountToBeCharge);
+        }
         WalletService::chargeWallet($streamer, $amountToBeCharge);
         $transaction->payment()->create([
             'token' => 'sandbox',
