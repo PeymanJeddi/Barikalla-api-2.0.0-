@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Overlay;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Donate\DonateResource;
+use App\Http\Resources\Overlay\TargetResource;
+use App\Models\Target;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -117,5 +119,36 @@ class OverlayController extends Controller
             'donates' => DonateResource::collection($donates),
             'pagination' => paginateResponse($donates),
         ]);
+    }
+
+    /**
+     * @OA\Get(
+     * path="/api/overlay/donate/{target_id}",
+     * operationId="getSpecificTargetData",
+     * tags={"Overlay"},
+     * summary="Get target info",
+     * @OA\Parameter(name="target_id",in="path",description="id of a target",required=true),
+     * @OA\Parameter(name="key",in="query",description="sdfsdfdfdf",required=true),
+     * @OA\Response(
+     *    response=200,
+     *    description="Your request has been successfully completed.",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="success", type="bool", example="true"),
+     *       @OA\Property(property="message", type="string", example="Your request has been successfully completed."),
+     *       @OA\Property(property="data"),
+     *        )
+     *     ),
+     * )
+     */
+    public function getTarget(Request $request, Target $target)
+    {
+        $streamer = User::where('uuid', $request->key)->first();
+        if (!$streamer) {
+            abort(404, 'Invalid key');
+        }
+        if ($streamer->id == $target->user_id) {
+            return sendResponse('Target into', new TargetResource($target));
+        }
+        abort(400);
     }
 }
