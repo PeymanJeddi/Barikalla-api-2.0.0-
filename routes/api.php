@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Attachment\AttachmentController;
 use App\Http\Controllers\Api\Auth\AuthenticationController;
 use App\Http\Controllers\Api\Donate\DonateController;
 use App\Http\Controllers\Api\Gateway\GatewayController;
+use App\Http\Controllers\Api\Home\HomeController;
 use App\Http\Controllers\Api\Identity\IdentityController;
 use App\Http\Controllers\Api\Overlay\OverlayController;
 use App\Http\Controllers\Api\Payment\PaymentController;
@@ -96,6 +97,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('payment')->group(function () {
         Route::get('/', [PaymentController::class, 'index']);
+    });
+
+    Route::prefix('home')->group(function () {
+        Route::get('/', [HomeController::class, 'index']);
     });
 });
 
