@@ -57,6 +57,7 @@ class TargetController extends Controller
      *       @OA\Property(property="description", type="text", format="text", example="test description"),
      *       @OA\Property(property="target", type="integer", format="integer", example="300000", description="Price is in tooman"),
      *       @OA\Property(property="is_active", type="boolean", format="boolean", example="true"),
+     *       @OA\Property(property="is_default", type="boolean", format="boolean", example="true"),
      *    ),
      * ),
      * @OA\Response(
@@ -120,6 +121,7 @@ class TargetController extends Controller
      *       @OA\Property(property="description", type="text", format="text", example="test description"),
      *       @OA\Property(property="target", type="integer", format="integer", example="300000", description="Price is in tooman"),
      *       @OA\Property(property="is_active", type="boolean", format="boolean", example="true"),
+     *       @OA\Property(property="is_default", type="boolean", format="boolean", example="true"),
      *    ),
      * ),
      * @OA\Response(

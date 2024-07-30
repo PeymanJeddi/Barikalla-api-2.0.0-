@@ -22,6 +22,7 @@ class TargetResource extends JsonResource
             'target' => $this->target,
             'target_donated' => $this->target_donated,
             'is_active' => $this->is_active,
+            'is_default' => $this->is_default,
             'created_at' => Carbon::parse($this->getRawOriginal('created_at'))
             ->getTimestamp(),
             'updated_at' => Carbon::parse($this->getRawOriginal('updated_at'))
