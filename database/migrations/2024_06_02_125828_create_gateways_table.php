@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->text('biography')->nullable();
             $table->text('description')->nullable();
-            $table->boolean('is_payment_active')->default(0);
+            $table->boolean('is_payment_active')->default(1);
             $table->unsignedBigInteger('job_id')->nullable();
             $table->integer('min_donate')->default(5000);
             $table->integer('max_donate')->default(100000000);
