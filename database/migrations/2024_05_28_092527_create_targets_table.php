@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('target')->default(0);
             $table->integer('target_donated')->default(0); // Price donated to this target
             $table->boolean('is_active')->default(0);
+            $table->boolean('is_default')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
