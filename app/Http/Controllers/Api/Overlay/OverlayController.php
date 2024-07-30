@@ -16,7 +16,7 @@ class OverlayController extends Controller
 {
     /**
      * @OA\Get(
-     * path="/api/overlay/donate",
+     * path="/api/overlay/donate_alert",
      * operationId="donateOverlay",
      * tags={"Overlay"},
      * summary="Get streamer donates",
@@ -32,7 +32,7 @@ class OverlayController extends Controller
      *     ),
      * )
      */
-    public function donate(Request $request)
+    public function donateAlert(Request $request)
     {
         $streamer = User::where('uuid', $request->key)->first();
         if (!$streamer) {
@@ -91,7 +91,7 @@ class OverlayController extends Controller
 
     /**
      * @OA\Get(
-     * path="/api/overlay/donates",
+     * path="/api/overlay/latest_donates",
      * operationId="getLastDonates",
      * tags={"Overlay"},
      * summary="Get last donates",
@@ -108,7 +108,7 @@ class OverlayController extends Controller
      *     ),
      * )
      */
-    public function donates(Request $request)
+    public function latestDonates(Request $request)
     {
         $streamer = User::where('uuid', $request->key)->first();
         if (!$streamer) {
