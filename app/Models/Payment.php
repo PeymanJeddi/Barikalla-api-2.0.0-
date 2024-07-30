@@ -22,6 +22,7 @@ class Payment extends Model
                 $payment->profit()->create([
                     'amount_user_paid' => $payment->transaction->amount,
                     'amount_streamer_charged' => DonateAmountService::calculateAmount($payment->transaction->streamer, $payment->transaction),
+                    'tax' => DonateAmountService::calculateTax($payment->transaction->raw_amount),
                     'profit' => DonateAmountService::calculateWage($payment->transaction->streamer, $payment->transaction->raw_amount),
                 ]);
             }
