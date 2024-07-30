@@ -123,6 +123,38 @@ class OverlayController extends Controller
 
     /**
      * @OA\Get(
+     * path="/api/overlay/most_expensive_donates",
+     * operationId="getMostExpensiveDonates",
+     * tags={"Overlay"},
+     * summary="Get most expensive donates",
+     * security={ {"sanctum": {} }},
+     * @OA\Parameter(name="key",in="query",description="sdfsdfdfdf",required=true),
+     * @OA\Response(
+     *    response=200,
+     *    description="Your request has been successfully completed.",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="success", type="bool", example="true"),
+     *       @OA\Property(property="message", type="string", example="Your request has been successfully completed."),
+     *       @OA\Property(property="data"),
+     *        )
+     *     ),
+     * )
+     */
+    public function mostExpensiveDonates(Request $request)
+    {
+        $streamer = User::where('uuid', $request->key)->first();
+        if (!$streamer) {
+            abort(404, 'Invalid key');
+        }
+        $donates = $streamer->transactionsReceived()->where('is_paid', 1)->where('type', 'donate')->orderBy('raw_amount', 'desc')->orderby('id', 'desc')->paginate(10);
+        return sendResponse('Most expensive donates I got', [
+            'donates' => DonateResource::collection($donates),
+            'pagination' => paginateResponse($donates),
+        ]);
+    }
+
+    /**
+     * @OA\Get(
      * path="/api/overlay/donate/{target_id}",
      * operationId="getSpecificTargetData",
      * tags={"Overlay"},

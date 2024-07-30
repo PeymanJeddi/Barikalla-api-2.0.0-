@@ -107,5 +107,6 @@ Route::prefix('overlay')->group(function () {
     Route::get('/donate_alert', [OverlayController::class, 'donateAlert']);
     Route::patch('/donate/{transaction}', [OverlayController::class, 'markAsWatchedDonate']);
     Route::get('/latest_donates', [OverlayController::class, 'latestDonates']);
+    Route::get('/most_expensive_donates', [OverlayController::class, 'mostExpensiveDonates']);
     Route::get('/donate/{target}', [OverlayController::class, 'getTarget']);
 });
