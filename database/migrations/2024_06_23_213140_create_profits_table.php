@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('payment_id')->nullable();
             $table->bigInteger('amount_user_paid');
             $table->bigInteger('amount_streamer_charged')->nullable();
+            $table->bigInteger('tax');
             $table->bigInteger('profit');
             $table->timestamps();
 
