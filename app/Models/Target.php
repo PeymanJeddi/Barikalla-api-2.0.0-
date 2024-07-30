@@ -10,7 +10,8 @@ class Target extends Model
 {
     use HasFactory;
     protected $guarded = [
-        'id'
+        'id',
+        'target_donated',
     ];
 
     protected static function booted(): void
