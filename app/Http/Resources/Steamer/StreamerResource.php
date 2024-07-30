@@ -28,6 +28,7 @@ class StreamerResource extends JsonResource
                 'max_donate' => $this->gateway->max_donate,
                 'is_donator_pay_wage' => $this->gateway->is_donator_pay_wage,
                 'is_donator_pay_tax' => $this->gateway->is_donator_pay_tax,
+                'view_count' => $this->gateway->view_count,
             ],
             'targets' => TargetPublicResource::collection($this->targets->where('is_active', 1)),
             'links' => LinkResource::collection($this->links),

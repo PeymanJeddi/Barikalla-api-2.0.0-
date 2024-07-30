@@ -23,6 +23,7 @@ class GatewayResource extends JsonResource
             'max_donate' => $this->max_donate,
             'is_donator_pay_wage' => $this->is_donator_pay_wage,
             'is_donator_pay_tax' => $this->is_donator_pay_tax,
+            'view_count' => $this->view_count,
         ];
     }
 }

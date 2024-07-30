@@ -23,6 +23,7 @@ return new class extends Migration
             $table->boolean('is_donator_pay_wage')->nullable();
             $table->boolean('is_donator_pay_tax')->nullable();
             $table->enum('wage_type', ['default', 'none', 'custom'])->default('default');
+            $table->bigInteger('view_count')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

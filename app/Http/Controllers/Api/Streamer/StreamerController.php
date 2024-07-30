@@ -28,6 +28,8 @@ class StreamerController extends Controller
      */
     public function show(User $user)
     {
+        $user->gateway->view_count += 1;
+        $user->gateway->save();
         return sendResponse('اطلاعات استریمر', new StreamerResource($user));
     }
 }
