@@ -25,6 +25,7 @@ class TargetStoreRequest extends FormRequest
             'title' => ['required', 'max:255'],
             'description' => ['nullable', 'max:3000'],
             'target' => ['required'],
+            'default_donated_amount' => ['nullable', 'integer'],
             'is_active' => ['nullable', 'boolean'],
             'is_default' => ['nullable', 'boolean'],
         ];

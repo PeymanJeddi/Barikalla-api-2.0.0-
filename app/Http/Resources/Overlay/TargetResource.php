@@ -18,7 +18,7 @@ class TargetResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'target' => $this->target,
-            'target_donated' => $this->target_donated,
+            'target_donated' => $this->target_donated + $this->default_donated_amount,
         ];
     }
 }

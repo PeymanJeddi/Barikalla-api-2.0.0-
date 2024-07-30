@@ -16,8 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->string('description')->nullable();
-            $table->integer('target')->default(0);
-            $table->integer('target_donated')->default(0); // Price donated to this target
+            $table->bigInteger('target')->default(0);
+            $table->bigInteger('target_donated')->default(0); // Price donated to this target
+            $table->bigInteger('default_donated_amount')->default(0);
             $table->boolean('is_active')->default(0);
             $table->boolean('is_default')->default(0);
             $table->timestamps();
