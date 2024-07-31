@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\Donation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DonationStoreController extends FormRequest
+class DonationStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,6 +28,7 @@ class DonationStoreController extends FormRequest
             'fullname' => ['required', 'max:255'],
             'description' => ['nullable', 'max:3000'],
             'sandbox' => ['nullable', 'boolean'],
+            'with_wallet' => ['nullable', 'boolean'],
             'target_id' => ['nullable', 'exists:targets,id'],
         ];
     }
