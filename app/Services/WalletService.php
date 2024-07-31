@@ -19,4 +19,18 @@ class WalletService extends Service
         $userWallet->save();
         return $userWallet;
     }
+
+    public static function withdrawFromWallet(User $user, int $amount)
+    {
+        $userWallet = $user->wallet;
+        $userWallet->credit -= $amount;
+        $userWallet->save();
+        return $userWallet;   
+    }
+
+    public static function CheckWalletBalance(User $user, int $amount): bool
+    {
+        $userWallet = $user->wallet;
+        return $userWallet->credit >= $amount;   
+    }
 }

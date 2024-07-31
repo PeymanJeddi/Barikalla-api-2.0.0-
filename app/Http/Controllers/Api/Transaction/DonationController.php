@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api\Transaction;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Donation\DonationStoreController;
+use App\Http\Requests\Api\Donation\DonationStoreRequest;
+use App\Http\Requests\Api\Transaction\DonateWithWalletStoreRequest;
 use App\Models\Kind;
 use App\Models\Target;
 use App\Models\Transaction;
@@ -33,6 +34,7 @@ class DonationController extends Controller
      *       @OA\Property(property="phone_number", type="string", format="string", example="09000000000"),
      *       @OA\Property(property="fullname", type="string", format="string", example="my full name"),
      *       @OA\Property(property="sandbox", type="boolean", format="boolean", example="0"),
+     *       @OA\Property(property="with_wallet", type="boolean", format="boolean", example="0"),
      *       @OA\Property(property="target_id", type="integer", format="integer", example="64"),
      *       @OA\Property(property="description", type="text", format="text", example="this is test description."),
      *    ),
@@ -48,7 +50,7 @@ class DonationController extends Controller
      *     ),
      * )
      */
-    public function makeDonate(DonationStoreController $request)
+    public function makeDonate(DonationStoreRequest $request)
     {
         $user = auth()->user();
         $streamer = $this->getStreamer($request->streamer_username);
@@ -56,6 +58,11 @@ class DonationController extends Controller
         if ($request->sandbox && $user->hasRole('developer')) {
             return $this->generateFakeDonate($streamer, $user, $request->amount, $request->fullname, $request->target_id);
         }
+
+        if ($request->with_wallet) {
+            return $this->donateWithWallet($user, $streamer, $request);
+        }
+
 
         $target = null;
         if ($request->has('target_id')) {
@@ -150,4 +157,46 @@ class DonationController extends Controller
         return sendResponse('دونیت با موفقیت ایجاد شد', '');
     }
 
+    private function donateWithWallet(User $user, User $streamer, $request)
+    {
+        if ($request->target_id) {
+            $target = Target::find($request->target_id);
+            if ($target->user_id != $streamer->id) {
+                return sendError('عدم دسترسی', '', 403);
+            }
+        }
+
+        $finalAmount = $this->calculateAmount($streamer, $request->amount);
+        if(!WalletService::CheckWalletBalance($user, $finalAmount)) {
+            return sendError('موجودی کیف پول شما کافی نمی‌باشد');
+        }
+        
+        WalletService::withdrawFromWallet($user, $finalAmount);
+        $transaction = Transaction::create([
+            'user_id' => $user->id,
+            'streamer_id' => $streamer->id,
+            'target_id' => $request->target_id,
+            'amount' => $finalAmount,
+            'raw_amount' => $request->amount,
+            'fullname' => $user->fullname,
+            'description' => $request->description,
+            'mobile' => $user->mobile,
+            'type' => 'donate',
+            'is_paid' => 1,
+        ]);
+
+
+        $amountToBeCharge = DonateAmountService::calculateAmount($streamer, $transaction);
+        if (@$target) {
+            TargetService::chargetTarget($target, $amountToBeCharge);
+        }
+        WalletService::chargeWallet($streamer, $amountToBeCharge);
+        $transaction->payment()->create([
+            'token' => 'donate_with_wallet',
+            'code' => 'donate_with_wallet',
+            'user_credit_after_payment' => WalletService::getUserCredit($transaction->user),
+            'streamer_credit_after_payment' => WalletService::getUserCredit($transaction->streamer),
+        ]);
+        return sendResponse('دونیت با موفقیت انجام شد', []);
+    }
 }
