@@ -159,6 +159,7 @@ class DonationController extends Controller
 
     private function donateWithWallet(User $user, User $streamer, $request)
     {
+        $amount  = $request->amount;
         if ($request->target_id) {
             $target = Target::find($request->target_id);
             if ($target->user_id != $streamer->id) {
@@ -166,31 +167,28 @@ class DonationController extends Controller
             }
         }
 
-        $finalAmount = $this->calculateAmount($streamer, $request->amount);
-        if(!WalletService::CheckWalletBalance($user, $finalAmount)) {
+        if(!WalletService::CheckWalletBalance($user, $amount)) {
             return sendError('موجودی کیف پول شما کافی نمی‌باشد');
         }
         
-        WalletService::withdrawFromWallet($user, $finalAmount);
+        WalletService::withdrawFromWallet($user, $amount);
         $transaction = Transaction::create([
             'user_id' => $user->id,
             'streamer_id' => $streamer->id,
             'target_id' => $request->target_id,
-            'amount' => $finalAmount,
-            'raw_amount' => $request->amount,
+            'amount' => $amount,
+            'raw_amount' => $amount,
             'fullname' => $user->fullname,
             'description' => $request->description,
             'mobile' => $user->mobile,
-            'type' => 'donate',
+            'type' => 'donate_with_wallet',
             'is_paid' => 1,
         ]);
 
-
-        $amountToBeCharge = DonateAmountService::calculateAmount($streamer, $transaction);
         if (@$target) {
-            TargetService::chargetTarget($target, $amountToBeCharge);
+            TargetService::chargetTarget($target, $amount);
         }
-        WalletService::chargeWallet($streamer, $amountToBeCharge);
+        WalletService::chargeWallet($streamer, $amount);
         $transaction->payment()->create([
             'token' => 'donate_with_wallet',
             'code' => 'donate_with_wallet',
