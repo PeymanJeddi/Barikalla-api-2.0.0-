@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('mobile', 11);
             $table->text('description')->nullable();
             $table->boolean('is_paid')->default(0);
-            $table->string('type')->comment('donate|charge|subscription');
+            $table->string('type')->comment('donate|donate_with_wallet|charge|subscription|withdraw');
             $table->timestamp('watched_at')->nullable();
             $table->timestamps();
 
