@@ -40,7 +40,7 @@ class CreditController extends Controller
     public function addCredit(AddCreditRequest $request)
     {
         $user = $request->user();
-        $finalAmount = DonateAmountService::calculateTax($request->amount) + $request->amount;
+        $finalAmount = DonateAmountService::calculateTax($request->amount) + DonateAmountService::calculateWage($user, $request->amount) + $request->amount;
         $transaction = Transaction::create([
             'user_id' => $user->id,
             'amount' => $finalAmount,
