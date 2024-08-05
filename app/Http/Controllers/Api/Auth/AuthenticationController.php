@@ -38,7 +38,11 @@ class AuthenticationController extends Controller
      */
     public function sendOtp(SendOtpRequest $request)
     {
-        $response = Otp::generateCode($request->phone_number, 'verifybarikalla');
+        $smsTemplate = 'verifybarikalla';
+        if (User::where('mobile', $request->phone_number)->exists()) {
+            $smsTemplate = 'loginbarikalla';
+        }
+        $response = Otp::generateCode($request->phone_number, $smsTemplate);
         return $response;
     }
 
