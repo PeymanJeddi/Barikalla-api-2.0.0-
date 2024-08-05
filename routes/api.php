@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('user')->group(function() {
         Route::get('/get-profile', [UserController::class, 'show']);
         Route::patch('/edit-profile', [UserController::class, 'update']);
+        Route::get('/completeness', [UserController::class, 'completeness']);
         Route::delete('/logout', [UserController::class, 'logout']);
 
         Route::prefix('link')->group(function () {
