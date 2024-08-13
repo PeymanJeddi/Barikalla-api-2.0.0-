@@ -19,8 +19,8 @@ class VerifyController extends Controller
 {
     public function verifyTransaction(Request $request)
     {
+        $transaction = Transaction::where('order_id', $request->OrderId)->first();
         if ($request->status == 0) {
-            $transaction = Transaction::where('order_id', $request->OrderId)->first();
 
             if ($transaction->is_paid) {
                 return sendError('تراکنش قبلا تایید شده است', '', 403);
@@ -53,15 +53,9 @@ class VerifyController extends Controller
                 $transaction->user->assignRole('vip');
             }
 
-            return Http::post(config('app.payment_front_callback_url'), [
-                'success' => true, 
-                'amount' => $transaction->amount,
-                'order_id' => $transaction->order_id,
-            ]);
+            return redirect("https://barikalla.com/checkout/result/success?id=$transaction->id&amount=$transaction->amount&order_id=$transaction->order_id");
         }    
-        return Http::post(config('app.payment_front_callback_url'), [
-            'success' => false, 
-        ]);
+        return redirect("https://barikalla.com/checkout/result/failure?id=$transaction->id&amount=$transaction->amount&order_id=$transaction->order_id");
     }
 
 }

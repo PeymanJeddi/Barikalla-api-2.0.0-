@@ -149,13 +149,4 @@ return [
 
     'vip_package_price' => env('VIP_PACKAGE_PRICE'),
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Payment front-end callback url
-    |--------------------------------------------------------------------------
-    */
-
-    'payment_front_callback_url' => env('PAYMENT_FRONT_CALLBACK_URL', 'https://barikalla.com/payment/verify'),
-
 ];
