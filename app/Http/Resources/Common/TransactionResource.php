@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Common;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,6 +22,8 @@ class TransactionResource extends JsonResource
             'amount' => $this->amount,
             'raw_amount' => $this->raw_amount,
             'type' => $this->type,
+            'created_at' => Carbon::parse($this->getRawOriginal('created_at'))
+            ->getTimestamp(),
         ];
     }
 }
