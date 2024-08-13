@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Route;
 
 if (!function_exists('isEnglishNumbers')) {
@@ -64,5 +67,15 @@ if (!function_exists('isMenuActive')) {
             return in_array(Route::currentRouteName(), $routeName) ? $activeClassName : '';
         }
         return Route::currentRouteName() == $routeName ? $activeClassName : '';
+    }
+}
+if (!function_exists('paginate')) {
+    function paginate($items, $perPage = 15, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }
