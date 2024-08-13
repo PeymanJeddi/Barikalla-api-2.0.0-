@@ -29,7 +29,11 @@ class PaymentController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $transactions = $user->allTransactions->where('is_paid', 1);
-        return sendResponse('All successful transactions', TransactionResource::collection($transactions));
+        $transactions = $user->allTransactions;
+        $transactions = paginate($transactions, 10);
+        return sendResponse('All successful transactions', [
+            'transactions' => TransactionResource::collection($transactions),
+            'pagination' => paginateResponse($transactions),
+        ]);
     }
 }
