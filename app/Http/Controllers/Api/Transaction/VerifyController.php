@@ -20,6 +20,7 @@ class VerifyController extends Controller
     public function verifyTransaction(Request $request)
     {
         $transaction = Transaction::where('order_id', $request->OrderId)->first();
+        $streamer = $transaction->streamer;
         if ($request->status == 0) {
 
             if ($transaction->is_paid) {
@@ -29,7 +30,6 @@ class VerifyController extends Controller
             $payment = PaymentService::verifyPayment($request->Token, $transaction);
             
             if ($transaction->type == 'donate') {
-                $streamer = $transaction->streamer;
                 $amountToBeCharge = DonateAmountService::calculateAmount($streamer, $transaction);
                 WalletService::chargeWallet($streamer, $amountToBeCharge);
                 
@@ -53,9 +53,9 @@ class VerifyController extends Controller
                 $transaction->user->assignRole('vip');
             }
 
-            return redirect("https://barikalla.com/checkout/result/success?id=$transaction->id&amount=$transaction->amount&order_id=$transaction->order_id");
+            return redirect("https://barikalla.com/checkout/result/success?id=$transaction->id&amount=$transaction->amount&order_id=$transaction->order_id&username=$streamer->username");
         }    
-        return redirect("https://barikalla.com/checkout/result/failure?id=$transaction->id&amount=$transaction->amount&order_id=$transaction->order_id");
+        return redirect("https://barikalla.com/checkout/result/failure?id=$transaction->id&amount=$transaction->amount&order_id=$transaction->order_id&username=$streamer->username");
     }
 
 }
