@@ -116,3 +116,4 @@ Route::prefix('overlay')->group(function () {
     Route::get('/most_expensive_donates', [OverlayController::class, 'mostExpensiveDonates']);
     Route::get('/donate/{target}', [OverlayController::class, 'getTarget']);
 });
+Route::get('attachment/view/{attachment}', [AttachmentController::class, 'show']);
