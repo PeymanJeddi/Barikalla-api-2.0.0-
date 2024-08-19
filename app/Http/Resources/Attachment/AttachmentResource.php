@@ -16,7 +16,7 @@ class AttachmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'url' => $this->url
+            'url' => url("api/attachment/view/$this->id"),
         ];
     }
 }
