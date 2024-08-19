@@ -26,6 +26,11 @@ class Attachment extends Model
         return str_replace('storage', 'public', $this->path);
     }
 
+    public function getlocalPathAttribute()
+    {
+        return str_replace('storage', '', $this->path);
+    }
+
     public function attachable(): MorphTo
     {
         return $this->morphTo();
