@@ -13,10 +13,10 @@ class UploadTypeTableSeeder extends Seeder
      */
     public function run(): void
     {
-        KindService::Seeder('نوع اپلود', 'upload_type', 'نام', '', [
-            ['key' => 'avatar', 'value_1' => 'آواتار پروفایل'],
-            ['key' => 'birth-certificate', 'value_1' => 'شناسنامه' ],
-            ['key' => 'national-card', 'value_1' => 'کارت ملی'],
+        KindService::Seeder('نوع اپلود', 'upload_type', 'نام', 'دسترسی', [
+            ['key' => 'avatar', 'value_1' => 'آواتار پروفایل', 'value_2' => 'public'],
+            ['key' => 'birth-certificate', 'value_1' => 'شناسنامه', 'value_2' => 'private'],
+            ['key' => 'national-card', 'value_1' => 'کارت ملی', 'value_2' => 'private'],
         ]);
     }
 }
