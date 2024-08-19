@@ -23,7 +23,7 @@ class AttachmentRequest extends FormRequest
     {
         return [
             'file' => 'required|mimes:jpg,png,jpeg',
-            'type_id' => ['nullable', 'exists:kinds,id'],
+            'type_id' => ['required', 'exists:kinds,id'],
         ];
     }
 }

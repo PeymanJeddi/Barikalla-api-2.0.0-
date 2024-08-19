@@ -21,7 +21,7 @@ class AttachmentPolicy
      */
     public function view(User $user, Attachment $attachment): bool
     {
-        //
+        return $user->id === $attachment->user_id;
     }
 
     /**

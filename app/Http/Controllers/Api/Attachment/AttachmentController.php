@@ -10,6 +10,8 @@ use App\Models\Attachment;
 use App\Models\Kind;
 use App\Services\AttachmentService;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class AttachmentController extends Controller
 {
@@ -31,7 +33,7 @@ class AttachmentController extends Controller
      *            mediaType="multipart/form-data",
      *            @OA\Schema(
      *               type="object",
-     *               required={"file"},
+     *               required={"file", "type_id"},
      *               @OA\Property(property="file", type="file"),
      *               @OA\Property(property="type_id", type="integer", description="numeric id of upload type", example="5"),
      *            ),
@@ -52,6 +54,10 @@ class AttachmentController extends Controller
     public function store(AttachmentRequest $request)
     {
         $user = $request->user();
+        if (!Kind::IsKindBelongsToKindCategory($request->type_id, 'upload_type')) {
+            return sendError('Access denied', ['type_id' => 'نوع آپلود انتخاب شده اشتباه می‌باشد']);
+        }
+
         if ($request->has('type_id') && $request->type_id != '') {
             $uploadType = Kind::find($request->type_id);
             switch ($uploadType->key) {
@@ -83,6 +89,54 @@ class AttachmentController extends Controller
         
         $attachment = $this->attachmentService->makeUpload($request->file('file'), $user, $request->type_id ?? null);
         return sendResponse('عکس با موفقیت آپلود شد', ['attachment' => new AttachmentResource($attachment)]);
+    }
+
+    /**
+     * @OA\Get(
+     * path="/api/attachment/view/{attachment}",
+     * operationId="getPrivateFile",
+     * tags={"Attachment"},
+     * summary="Get a file",
+     * security={ {"sanctum": {} }},
+     * @OA\Parameter(name="attachment",in="path",description="14",required=true),
+     * 
+     *    @OA\Response(
+     *    response=200,
+     *    description="Your request has been successfully completed.",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="success", type="bool", example="true"),
+     *       @OA\Property(property="message", type="string", example="Your request has been successfully completed."),
+     *       @OA\Property(property="data"),
+     *        )
+     *     ),
+     * )
+     */
+    public function show(Attachment $attachment)
+    {
+        $exists = Storage::disk('public')->exists($attachment->localpath);
+        if($exists) {
+            $content = Storage::get($attachment->realpath);
+            $mime = Storage::mimeType($attachment->realpath);
+            $response = Response::make($content, 200);
+            $response->header("Content-Type", $mime);
+            if ($user = auth('api')->user()) {
+                if (isset($attachment->type) && $attachment->type->value_2 == 'private') {
+                    if (Gate::forUser($user)->allows('view', $attachment)) {
+                        return $response;
+                    }
+                    abort(404);
+                } else {
+                    return $response;
+                }
+            } else {
+                if (!isset($attachment->type) || $attachment->type->value_2 == 'public') {
+                    return $response;
+                }
+                abort(404);
+            }
+        } else {
+           abort(404);
+        }
     }
 
         /**
